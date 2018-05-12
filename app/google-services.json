@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "157524436686",
+    "firebase_url": "https://fattyliver-21ad4.firebaseio.com",
+    "project_id": "fattyliver-21ad4",
+    "storage_bucket": "fattyliver-21ad4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157524436686:android:b131ca147dc11dc8",
+        "android_client_info": {
+          "package_name": "kr.ac.ajou.fattyliver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "157524436686-othr6j0t97uvebh8l9prfdic5o3uoi2j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-85L_BitWPHHiVeBy2sb7_dHKCzlKRLE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

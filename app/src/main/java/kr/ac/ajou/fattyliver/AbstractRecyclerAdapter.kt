@@ -1,11 +1,10 @@
-package com.example.janghanna.fattyliver
+package kr.ac.ajou.fattyliver
 
 import android.support.v7.widget.RecyclerView
-import java.util.ArrayList
 
 abstract class AbstractRecyclerAdapter<T> : RecyclerView.Adapter<AbstractViewHolder<T>>() {
 
-    private var items: MutableList<T> = emptyList<T>() as MutableList<T>
+    private var items: MutableList<T>? = null
 
     private var onItemClickListener: OnItemClickListener<T>? = null
 
@@ -18,45 +17,45 @@ abstract class AbstractRecyclerAdapter<T> : RecyclerView.Adapter<AbstractViewHol
     }
 
     init {
-        items = ArrayList()
+        items = mutableListOf()
     }
 
     override fun onBindViewHolder(holder: AbstractViewHolder<T>, position: Int) {
-        holder.onBindView(getItem(holder.adapterPosition), position)
+        getItem(holder.adapterPosition)?.let { holder.onBindView(it, position) }
         holder.itemView.setOnClickListener({ _ ->
             if (onItemClickListener != null) {
-                onItemClickListener!!.onItemClick(getItem(position), position)
+                getItem(position)?.let { onItemClickListener!!.onItemClick(it, position) }
             }
         })
     }
 
-    fun getItem(position: Int): T {
-        return items[position]
+    fun getItem(position: Int): T? {
+        return items?.get(position)
     }
 
-    operator fun get(item: T): Int {
-        return items.indexOf(item)
+    operator fun get(item: T): Int? {
+        return items?.indexOf(item)
     }
 
     fun setItems(items: MutableList<T>) {
-        this.items.clear()
+        this.items?.clear()
         this.items = items
     }
 
     fun clear() {
-        this.items.clear()
+        this.items?.clear()
     }
 
     fun addItemToIndex(index: Int, item: T) {
-        items.add(index, item)
+        items?.add(index, item)
     }
 
     fun addItem(item: T) {
-        items.add(item)
+        items?.add(item)
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return items!!.size
     }
 
 }

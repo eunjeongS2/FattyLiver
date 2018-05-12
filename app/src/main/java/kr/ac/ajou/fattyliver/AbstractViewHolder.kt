@@ -1,4 +1,4 @@
-package com.example.janghanna.fattyliver
+package kr.ac.ajou.fattyliver
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
