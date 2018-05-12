@@ -59,9 +59,4 @@ class Tab2Fragment : RootFragment(), OnAlarmLoadListener {
         adapter?.notifyDataSetChanged()
     }
 
-    override fun onAddAlarm(alarm: Alarm) {
-
-    }
-
-
 }

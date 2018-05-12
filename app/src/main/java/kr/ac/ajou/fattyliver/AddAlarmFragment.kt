@@ -32,9 +32,11 @@ class AddAlarmFragment : RootFragment(), TimePicker.OnTimeChangedListener {
         phone = view.findViewById(R.id.alarm_phone_edit)
         password = view.findViewById(R.id.alarm_password_edit)
 
+        val alarmModel = AlarmModel()
         saveButton = view.findViewById(R.id.ok_button)
         saveButton.setOnClickListener{
             Log.d("aaa", """${phone.text}/${password.text}/$nMeridiem $nHour:$nMinute""") // 저장
+            alarmModel.saveAlarm(nMeridiem, "$nHour:$nMinute", phone.text.toString())
             fragmentManager?.popBackStackImmediate()
             
         }

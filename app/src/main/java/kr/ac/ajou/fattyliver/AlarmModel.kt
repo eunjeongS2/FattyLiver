@@ -51,7 +51,7 @@ class AlarmModel {
     }
 
     fun saveAlarm(meridiem: String, time: String, phoneNum: String) {
-        var childRef: DatabaseReference = alarmRef.push()
+        val childRef: DatabaseReference = alarmRef.push()
         childRef.setValue(Alarm(meridiem, time, phoneNum))
     }
 
