@@ -1,9 +1,8 @@
-package com.example.janghanna.fattyliver
+package kr.ac.ajou.fattyliver
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-import kr.ac.ajou.fattyliver.R
 
 class AlarmListViewHolder(parent: ViewGroup) : AbstractViewHolder<Alarm>(
         LayoutInflater.from(parent.context)

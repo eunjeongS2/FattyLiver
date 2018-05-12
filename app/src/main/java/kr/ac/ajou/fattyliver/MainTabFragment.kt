@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -90,12 +89,8 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
         dataSet.valueTextSize = 8F
 
         chartView?.data = LineData(dataSet)
-        xAxis?.valueFormatter = object :IndexAxisValueFormatter(labels){
-
-            override fun getFormattedValue(value: Float, axis: AxisBase?): String {
-                return labels[Math.round(value)]
-            }
-        }
+        xAxis?.granularity = 1f
+        xAxis?.valueFormatter = IndexAxisValueFormatter(labels)
 
         chartView?.animateXY(500, 2000)
         chartView?.invalidate()
