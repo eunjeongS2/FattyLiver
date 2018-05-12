@@ -1,6 +1,5 @@
 package kr.ac.ajou.fattyliver
 
-import android.app.Fragment
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -19,7 +18,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 
-class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChangedListener {
+class MainTabFragment : RootFragment(), ChartModel.OnChartLoadListener, OnDataChangedListener {
 
     private var idTextView : TextView? = null
     private var calendarImageView : ImageView? = null
@@ -31,7 +30,7 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
     private var chartModel : ChartModel? = null
     private var alcoholModel : AlcoholModel? = null
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = LayoutInflater.from(context).inflate(R.layout.main_tab_fragment, container, false)
         idTextView = view.findViewById(R.id.textView_id)
         calendarImageView = view.findViewById(R.id.imageView_calendar)
@@ -82,8 +81,8 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
     }
 
     override fun onLoad(dataSet: LineDataSet, labels: ArrayList<String>) {
-        dataSet.setCircleColor(ContextCompat.getColor(context, R.color.colorBlue))
-        dataSet.color = ContextCompat.getColor(context, R.color.colorBlue)
+        context?.let { ContextCompat.getColor(it, R.color.colorBlue) }?.let { dataSet.setCircleColor(it) }
+        dataSet.color = context?.let { ContextCompat.getColor(it, R.color.colorBlue) }!!
         dataSet.circleRadius = 4.3F
         dataSet.lineWidth = 1.5f
         dataSet.valueTextSize = 8F

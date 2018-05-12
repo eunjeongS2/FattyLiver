@@ -1,6 +1,7 @@
 package kr.ac.ajou.fattyliver
 
 import android.support.v7.widget.RecyclerView
+import java.util.ArrayList
 
 abstract class AbstractRecyclerAdapter<T> : RecyclerView.Adapter<AbstractViewHolder<T>>() {
 
@@ -55,7 +56,7 @@ abstract class AbstractRecyclerAdapter<T> : RecyclerView.Adapter<AbstractViewHol
     }
 
     override fun getItemCount(): Int {
-        return items!!.size
+        return items?.size!!
     }
 
 }
