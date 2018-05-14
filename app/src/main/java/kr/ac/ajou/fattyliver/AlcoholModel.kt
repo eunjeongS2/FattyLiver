@@ -12,7 +12,8 @@ class AlcoholModel{
     init {
         alcohols = mutableListOf()
         database = FirebaseDatabase.getInstance()
-        ref = database?.reference
+//        ref = database?.reference
+        ref = database?.getReference("alcohols")
 
         this.ref?.addValueEventListener(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {

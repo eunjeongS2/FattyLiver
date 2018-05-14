@@ -2,6 +2,7 @@ package kr.ac.ajou.fattyliver
 
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -18,7 +19,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 
-class MainTabFragment : RootFragment(), ChartModel.OnChartLoadListener, OnDataChangedListener {
+class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChangedListener {
 
     private var idTextView : TextView? = null
     private var calendarImageView : ImageView? = null

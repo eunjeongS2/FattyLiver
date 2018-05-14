@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 
+class FragmentInfo(val iconResId: Int, val text: String, val fragment: Fragment)
 
 class TabPagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
 

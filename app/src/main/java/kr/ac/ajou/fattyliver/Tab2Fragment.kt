@@ -14,37 +14,52 @@ import android.view.ViewGroup
 import android.support.v7.widget.DividerItemDecoration
 
 
-class Tab2Fragment : RootFragment(), OnAlarmLoadListener {
+class Tab2Fragment : Fragment(), OnAlarmLoadListener, AbstractRecyclerAdapter.OnItemClickListener<Alarm> {
 
     private var adapter: AlarmListRecyclerAdapter? = null
-    private var alarmRecyclerView : RecyclerView? = null
-    private var alarmModel : AlarmModel? = null
-    private var addAlarmButton: FloatingActionButton? = null
+    private var alarmRecyclerView: RecyclerView? = null
+    private var alarmModel: AlarmModel? = null
+//    private var addAlarmButton: FloatingActionButton? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = LayoutInflater.from(context).inflate(R.layout.fragment_tab2, container, false)
         alarmRecyclerView = view.findViewById(R.id.alarm_recyclerView)
-        addAlarmButton = view.findViewById(R.id.add_alarm_button)
+        val addAlarmButton: FloatingActionButton = view.findViewById(R.id.add_alarm_button)
 
         setUpAlarmListView()
+        alarmRecyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (dy > 0) {
+                    if (addAlarmButton.isShown) addAlarmButton.hide()
+                }
+                else if (dy < 0) {
+                    if(!addAlarmButton.isShown) addAlarmButton.show()
+                }
+            }
+        })
 
         alarmModel = AlarmModel()
         alarmModel?.setOnAlarmLoadListener(this)
         alarmModel?.fetchAlarm()
 
-        addAlarmButton?.setOnClickListener {
-            val frag: Fragment = AddAlarmFragment()
+        addAlarmButton.setOnClickListener {
+            //            val fmanager: FragmentManager? = activity?.supportFragmentManager
             val fmanager: FragmentManager? = fragmentManager
-            val ftrans: FragmentTransaction = fmanager!!.beginTransaction()
-            ftrans.add(R.id.container, frag)
-            ftrans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            ftrans.addToBackStack(null)
-            ftrans.commit()
+            val ftrans: FragmentTransaction? = fmanager?.beginTransaction()
+            ftrans?.replace(R.id.main_container, AddAlarmFragment())
+            ftrans?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            ftrans?.addToBackStack(null)
+            ftrans?.commit()
+
         }
+
 
         return view
     }
+
 
     private fun setUpAlarmListView() {
         alarmRecyclerView?.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager(context).orientation))
@@ -57,6 +72,12 @@ class Tab2Fragment : RootFragment(), OnAlarmLoadListener {
     override fun onFetchAlarm(alarmList: MutableList<Alarm>) {
         adapter?.setItems(alarmList)
         adapter?.notifyDataSetChanged()
+        alarmRecyclerView?.scrollToPosition(alarmList.size - 1)
+        adapter?.setOnItemClickListener(this)
+    }
+
+    override fun onItemClick(item: Alarm, position: Int) {
+
     }
 
 }

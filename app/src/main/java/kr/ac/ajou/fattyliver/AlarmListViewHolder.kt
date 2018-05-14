@@ -2,6 +2,8 @@ package kr.ac.ajou.fattyliver
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import android.widget.Switch
 import android.widget.TextView
 
 class AlarmListViewHolder(parent: ViewGroup) : AbstractViewHolder<Alarm>(
@@ -16,6 +18,7 @@ class AlarmListViewHolder(parent: ViewGroup) : AbstractViewHolder<Alarm>(
         meridiem.text = item.meridiem
         time.text = item.time
         phoneNum.text = item.phoneNum
+
     }
 
 }

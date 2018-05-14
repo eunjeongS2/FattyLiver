@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_graph"
+        android:enabled="true"
+        android:icon="@drawable/timeline"
+        android:title="기록"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/nav_alarm"
+        android:enabled="true"
+        android:icon="@drawable/alarm"
+        android:title="알람"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/nav_community"
+        android:enabled="true"
+        android:icon="@drawable/face"
+        android:title="내기"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_alcohol"
+        android:enabled="true"
+        android:icon="@drawable/alcohol"
+        android:title="측정"
+        app:showAsAction="ifRoom" />
+</menu>

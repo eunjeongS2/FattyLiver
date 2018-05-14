@@ -2,6 +2,7 @@ package kr.ac.ajou.fattyliver
 
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,7 @@ import android.widget.EditText
 import android.widget.TimePicker
 
 
-class AddAlarmFragment : RootFragment(), TimePicker.OnTimeChangedListener {
+class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
 
     private lateinit var timePicker: TimePicker
     private var nHour: Int = 0
@@ -32,13 +33,14 @@ class AddAlarmFragment : RootFragment(), TimePicker.OnTimeChangedListener {
         phone = view.findViewById(R.id.alarm_phone_edit)
         password = view.findViewById(R.id.alarm_password_edit)
 
+        initTime(timePicker.hour, timePicker.minute)
+
         val alarmModel = AlarmModel()
         saveButton = view.findViewById(R.id.ok_button)
-        saveButton.setOnClickListener{
+        saveButton.setOnClickListener {
             Log.d("aaa", """${phone.text}/${password.text}/$nMeridiem $nHour:$nMinute""") // 저장
             alarmModel.saveAlarm(nMeridiem, "$nHour:$nMinute", phone.text.toString())
             fragmentManager?.popBackStackImmediate()
-            
         }
 
         cancelButton = view.findViewById(R.id.cancel_button)
@@ -47,10 +49,15 @@ class AddAlarmFragment : RootFragment(), TimePicker.OnTimeChangedListener {
         return view
     }
 
-    override fun onTimeChanged(timePicker: TimePicker?, hourOfDay: Int, minute: Int) {
-        nHour = hourOfDay
+    fun initTime(hour: Int, minute: Int) {
         nMinute = minute
-        nMeridiem = if(nHour >= 12) "오후" else "오전"
+        nHour = if (hour > 12) hour - 12 else hour
+        nMeridiem = if (hour >= 12 && hour != 0) "오후" else "오전"
     }
+
+    override fun onTimeChanged(timePicker: TimePicker?, hourOfDay: Int, minute: Int) {
+        initTime(hourOfDay, minute)
+    }
+
 
 }

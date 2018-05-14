@@ -2,14 +2,16 @@ package kr.ac.ajou.fattyliver
 
 import com.google.firebase.database.*
 
+
+
 class AlarmModel {
     private var alarmRef:DatabaseReference
 
-    private var alarmList : MutableList<Alarm>? = null
+    private var alarms : MutableList<Alarm>? = null
     private var onAlarmLoadListener : OnAlarmLoadListener? = null
 
     init {
-        alarmList = mutableListOf()
+        alarms = mutableListOf()
 //        alarmList?.add(Alarm("오전", "6:55", "01012345678"))
 //        alarmList?.add(Alarm("오후", "7:05", "01012345678"))
 
@@ -17,21 +19,21 @@ class AlarmModel {
         alarmRef = database.getReference("alarms")
         alarmRef.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError?) {
-                System.out.println(p0?.message)
+                println(p0?.message)
             }
 
             override fun onDataChange(p0: DataSnapshot?) {
-                val newAlarmList: MutableList<Alarm> = mutableListOf()
+                val newAlarms: MutableList<Alarm> = mutableListOf()
                 val children: MutableIterable<DataSnapshot>? = p0?.children
 
                 for (e in children!!) {
                     val alarm: Alarm? = e.getValue(Alarm::class.java)
-                    alarm?.let { newAlarmList.add(it) }
+                    alarm?.let { newAlarms.add(it) }
                 }
 
-                alarmList = newAlarmList
+                alarms = newAlarms
                 if(onAlarmLoadListener != null) {
-                    onAlarmLoadListener?.onFetchAlarm(alarmList!!)
+                    onAlarmLoadListener?.onFetchAlarm(alarms!!)
                 }
             }
 
@@ -47,7 +49,7 @@ class AlarmModel {
 
     fun fetchAlarm(){
         if(onAlarmLoadListener!=null)
-            alarmList?.let { onAlarmLoadListener?.onFetchAlarm(it) }
+            alarms?.let { onAlarmLoadListener?.onFetchAlarm(it) }
     }
 
     fun saveAlarm(meridiem: String, time: String, phoneNum: String) {

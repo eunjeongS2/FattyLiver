@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="알람울리는 시간"
                 android:textColor="@color/colorBlack"
-                android:textSize="30sp" />
+                android:textSize="35sp" />
 
         </LinearLayout>
 
@@ -55,11 +55,12 @@
     </LinearLayout>
 
     <Switch
+        android:id="@+id/alarm_switch"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center"
-        android:track="@drawable/custom_track"
         android:thumb="@drawable/custom_thumb"
+        android:track="@drawable/custom_track"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.87"

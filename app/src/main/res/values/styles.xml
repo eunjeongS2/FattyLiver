@@ -8,9 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MyTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
-        <item name="android:textSize">13sp</item>
-        <item name="android:textAllCaps">true</item>
+
+    <style name="NavigationViewOwnStyle">
+        <item name="android:listPreferredItemHeightSmall">40dp</item><!--item height-->
+        <item name="android:textSize">15sp</item> <!--item text size-->
     </style>
 
 </resources>
