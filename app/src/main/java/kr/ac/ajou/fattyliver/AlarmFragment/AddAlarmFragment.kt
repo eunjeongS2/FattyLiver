@@ -1,5 +1,4 @@
-package kr.ac.ajou.fattyliver
-
+package kr.ac.ajou.fattyliver.alarmFragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TimePicker
+import kr.ac.ajou.fattyliver.R
+import kr.ac.ajou.fattyliver.model.AlarmModel
 
 
 class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {

@@ -1,8 +1,6 @@
 package kr.ac.ajou.fattyliver
 
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import android.widget.Switch
 
 class AlarmListRecyclerAdapter : AbstractRecyclerAdapter<Alarm>() {
 

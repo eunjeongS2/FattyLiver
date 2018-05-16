@@ -1,8 +1,11 @@
-package kr.ac.ajou.fattyliver
+package kr.ac.ajou.fattyliver.mainTabFragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import kr.ac.ajou.fattyliver.AbstractViewHolder
+import kr.ac.ajou.fattyliver.model.Alcohol
+import kr.ac.ajou.fattyliver.R
 
 class AlcoholListViewHolder(parent : ViewGroup) : AbstractViewHolder<Alcohol>(LayoutInflater.from(parent.context).inflate(R.layout.item_alcohol, parent, false)) {
 
@@ -19,7 +22,7 @@ class AlcoholListViewHolder(parent : ViewGroup) : AbstractViewHolder<Alcohol>(La
     }
 
     override fun onBindView(item: Alcohol, position: Int) {
-        dateTextView?.text = item.date
+        dateTextView?.text = item.timestamp.split("/")[0]
         firstValueTextView?.text = item.value.toString()
     }
 

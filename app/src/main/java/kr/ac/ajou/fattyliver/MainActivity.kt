@@ -13,7 +13,7 @@ import android.util.TypedValue
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
-
+import kr.ac.ajou.fattyliver.mainTabFragment.MainTabFragment
 
 
 class MainActivity : AppCompatActivity() {

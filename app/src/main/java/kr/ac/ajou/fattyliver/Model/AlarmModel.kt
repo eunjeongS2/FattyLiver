@@ -1,4 +1,4 @@
-package kr.ac.ajou.fattyliver
+package kr.ac.ajou.fattyliver.model
 
 import com.google.firebase.database.*
 
@@ -9,6 +9,10 @@ class AlarmModel {
 
     private var alarms : MutableList<Alarm>? = null
     private var onAlarmLoadListener : OnAlarmLoadListener? = null
+
+    interface OnAlarmLoadListener {
+        fun onFetchAlarm(alarmList: MutableList<Alarm>)
+    }
 
     init {
         alarms = mutableListOf()
