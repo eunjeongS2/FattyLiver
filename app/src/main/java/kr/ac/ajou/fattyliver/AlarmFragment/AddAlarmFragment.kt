@@ -1,4 +1,5 @@
-package kr.ac.ajou.fattyliver.alarmFragment
+package kr.ac.ajou.fattyliver
+
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,11 +10,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TimePicker
-import kr.ac.ajou.fattyliver.R
+import com.google.firebase.iid.FirebaseInstanceId
 import kr.ac.ajou.fattyliver.model.AlarmModel
 
 
 class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
+    private val TAG = "AddAlarmFragment"
 
     private lateinit var timePicker: TimePicker
     private var nHour: Int = 0
@@ -23,6 +25,7 @@ class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
     private lateinit var password: EditText
     private lateinit var saveButton: Button
     private lateinit var cancelButton: Button
+    private var fcm: MyFirebaseMessagingService? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -34,14 +37,22 @@ class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
         phone = view.findViewById(R.id.alarm_phone_edit)
         password = view.findViewById(R.id.alarm_password_edit)
 
+        fcm = MyFirebaseMessagingService()
+
         initTime(timePicker.hour, timePicker.minute)
 
         val alarmModel = AlarmModel()
         saveButton = view.findViewById(R.id.ok_button)
         saveButton.setOnClickListener {
             Log.d("aaa", """${phone.text}/${password.text}/$nMeridiem $nHour:$nMinute""") // 저장
-            alarmModel.saveAlarm(nMeridiem, "$nHour:$nMinute", phone.text.toString())
+            alarmModel.saveAlarm(nMeridiem, "$nHour:$nMinute", phone.text.toString(), password.text.toString())
+
+            val token = FirebaseInstanceId.getInstance().token
+            Log.d(TAG, token)
+            alarmModel.sendPostToFCM(token, "$nHour:$nMinute")
+
             fragmentManager?.popBackStackImmediate()
+
         }
 
         cancelButton = view.findViewById(R.id.cancel_button)

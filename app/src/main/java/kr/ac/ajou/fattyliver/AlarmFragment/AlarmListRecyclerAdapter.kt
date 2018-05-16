@@ -1,6 +1,10 @@
 package kr.ac.ajou.fattyliver
 
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import android.widget.Switch
+import kr.ac.ajou.fattyliver.alarmFragment.AlarmListViewHolder
+import kr.ac.ajou.fattyliver.model.Alarm
 
 class AlarmListRecyclerAdapter : AbstractRecyclerAdapter<Alarm>() {
 

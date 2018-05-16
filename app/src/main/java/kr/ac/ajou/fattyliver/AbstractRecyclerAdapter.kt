@@ -1,6 +1,7 @@
 package kr.ac.ajou.fattyliver
 
 import android.support.v7.widget.RecyclerView
+import android.widget.AdapterView
 import java.util.ArrayList
 
 abstract class AbstractRecyclerAdapter<T> : RecyclerView.Adapter<AbstractViewHolder<T>>() {
@@ -15,6 +16,16 @@ abstract class AbstractRecyclerAdapter<T> : RecyclerView.Adapter<AbstractViewHol
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener<T>) {
         this.onItemClickListener = onItemClickListener
+    }
+
+    private var onItemLongClickListener: OnItemLongClickListener<T>? = null
+
+    interface OnItemLongClickListener<in T> {
+        fun onItemLongClick(item: T, position: Int)
+    }
+
+    fun setOnItemLongClickListener(onItemLongClickListener: OnItemLongClickListener<T>) {
+        this.onItemLongClickListener = onItemLongClickListener
     }
 
     init {
