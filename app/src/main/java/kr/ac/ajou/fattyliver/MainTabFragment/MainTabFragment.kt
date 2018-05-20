@@ -24,11 +24,12 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kr.ac.ajou.fattyliver.OnDataChangedListener
+import kr.ac.ajou.fattyliver.R
 import kr.ac.ajou.fattyliver.model.Alcohol
 import kr.ac.ajou.fattyliver.model.AlcoholModel
 import kr.ac.ajou.fattyliver.model.ChartModel
 
-class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChangedListener, OnChartValueSelectedListener {
+class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChangedListener, OnChartValueSelectedListener, CalendarFragment.OnDateChangedListener {
 
     private var idTextView : TextView? = null
     private var calendarImageView : ImageView? = null
@@ -39,13 +40,40 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
     private var adapter : AlcoholListRecyclerAdapter? = null
     private var chartModel : ChartModel? = null
     private var alcoholModel : AlcoholModel? = null
+    private var fattyLiverImageView : ImageView? = null
+    private var alcohols : MutableList<Alcohol>? = null
+    private var filterAlcohols : MutableList<Alcohol>? = null
+
+    companion object {
+        const val REQUEST_CODE = 300
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        val view = LayoutInflater.from(context).inflate(R.layout.main_tab_fragment, container, false)
-//        idTextView = view.findViewById(R.id.textView_id)
-//        calendarImageView = view.findViewById(R.id.imageView_calendar)
-//        chartView = view.findViewById(R.id.chart_line)
-//        alcoholListRecyclerView = view.findViewById(R.id.recyclerView_main)
+        val view = LayoutInflater.from(context).inflate(R.layout.fragment_main_tab, container, false)
+        idTextView = view.findViewById(R.id.textView_id)
+        calendarImageView = view.findViewById(R.id.imageView_calendar)
+        chartView = view.findViewById(R.id.chart_line)
+        alcoholListRecyclerView = view.findViewById(R.id.recyclerView_main)
+        fattyLiverImageView = view.findViewById(R.id.imageView_fattyliver)
+
+        println(arguments?.getStringArrayList("selectedDates"))
+
+        calendarImageView?.setOnClickListener {
+            val dialog = CalendarFragment()
+            val transaction : FragmentTransaction? = fragmentManager?.beginTransaction()
+            transaction?.addToBackStack(null)
+
+            val args = Bundle()
+            alcohols?.let {
+                alcohols = alcoholModel?.getMaxAlcohols()
+                args.putString("startDate", alcohols?.get(0)?.timestamp)
+                dialog.arguments = args
+                dialog.setTargetFragment(this, REQUEST_CODE)
+                dialog.show(transaction, CalendarFragment.TAG)
+            }
+        }
+        alcohols = mutableListOf()
+        filterAlcohols = mutableListOf()
 
         alcoholModel = AlcoholModel()
         alcoholModel?.setOnDataChangedListener(this)
@@ -91,8 +119,8 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
     }
 
     override fun onLoad(dataSet: LineDataSet, labels: MutableSet<String>) {
-//        context?.let { ContextCompat.getColor(it, R.color.colorBlue) }?.let { dataSet.setCircleColor(it) }
-//        dataSet.color = context?.let { ContextCompat.getColor(it, R.color.colorBlue) }!!
+        context?.let { ContextCompat.getColor(it, R.color.colorBlue) }?.let { dataSet.setCircleColor(it) }
+        dataSet.color = context?.let { ContextCompat.getColor(it, R.color.colorBlue) }!!
         dataSet.circleRadius = 4.3F
         dataSet.lineWidth = 1.5f
         dataSet.valueTextSize = 8F
@@ -107,11 +135,21 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
     }
 
     override fun onDataChanged() {
-        val alcohols = alcoholModel?.getMaxAlcohols()
-        alcohols?.let { adapter?.setItems(it) }
-        adapter?.notifyDataSetChanged()
+        alcohols = alcoholModel?.getMaxAlcohols()
 
-        loadChart(alcohols)
+        if (filterAlcohols?.size == 0){
+            if (alcohols?.size!! <= 5)
+                filterAlcohols = alcohols
+            else{
+                alcohols?.get(0)?.let { filterAlcohols?.add(it) }
+                alcohols?.get(1)?.let { filterAlcohols?.add(it) }
+                alcohols?.get(2)?.let { filterAlcohols?.add(it) }
+                alcohols?.get(3)?.let { filterAlcohols?.add(it) }
+                alcohols?.get(4)?.let { filterAlcohols?.add(it) }
+            }
+        }
+
+        updateView()
     }
 
     private fun loadChart(alcohols: MutableList<Alcohol>?) {
@@ -135,5 +173,29 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
 
         dialog.show(transaction, DateAlcoholDialogFragment.TAG)
 
+    }
+
+    override fun onDateChanged(dates: MutableList<String>) {
+        filterAlcohols = mutableListOf()
+
+        dates.forEach {
+            val filterDate = it.split("/")[1]
+
+            val saveAlcohol : Alcohol? = alcohols?.firstOrNull { filterDate == it.timestamp.split("/")[1] }
+
+            saveAlcohol?.let { it1 -> filterAlcohols?.add(it1) }
+        }
+        updateView()
+    }
+
+    private fun updateView(){
+        val alcoholsMap = filterAlcohols?.map { it.timestamp to it.value }?.toMap()
+
+        fattyLiverImageView?.alpha = (alcoholsMap?.values?.average()?.div(0.3))?.toFloat()!!
+        println(fattyLiverImageView?.alpha)
+
+        filterAlcohols?.let { adapter?.setItems(it) }
+        adapter?.notifyDataSetChanged()
+        loadChart(filterAlcohols)
     }
 }

@@ -21,11 +21,17 @@ class Alcohol(var timestamp: String = "", var value: Double = 0.0) : Parcelable{
             return arrayOfNulls(size)
         }
 
-        fun newAlcohol(value: Double) : Alcohol = Alcohol(timestamp(), value)
+        fun newAlcohol(timestamp: String = "",value: Double) : Alcohol {
+            return if (timestamp == "")
+                Alcohol(timestamp(), value)
+            else
+                Alcohol(timestamp, value)
+
+        }
 
         private fun timestamp(): String {
             val date = Date()
-            val dateFormat = SimpleDateFormat("M.d/a h:mm", Locale.KOREA)
+            val dateFormat = SimpleDateFormat("yyyy/M.d/a h:mm", Locale.KOREA)
             return dateFormat.format(date)
         }
 

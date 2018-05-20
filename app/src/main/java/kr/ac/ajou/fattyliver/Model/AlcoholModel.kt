@@ -2,6 +2,8 @@ package kr.ac.ajou.fattyliver.model
 
 import com.google.firebase.database.*
 import kr.ac.ajou.fattyliver.OnDataChangedListener
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AlcoholModel{
     var alcohols : MutableMap<String, MutableList<Alcohol>>? = null
@@ -14,6 +16,8 @@ class AlcoholModel{
         alcohols = mutableMapOf()
         database = FirebaseDatabase.getInstance()
         ref = database?.getReference("alcohols")
+        val dateFormat = SimpleDateFormat("M-d", Locale.KOREA)
+        val saveDateFormat = SimpleDateFormat("M.d", Locale.KOREA)
 
         this.ref?.addValueEventListener(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {
@@ -24,6 +28,19 @@ class AlcoholModel{
                 val newAlcohols: MutableMap<String, MutableList<Alcohol>> = mutableMapOf()
                 val children: Iterable<DataSnapshot> = p0!!.children
 
+                val firstDate = Calendar.getInstance()
+                firstDate.time = dateFormat.parse(p0.children.first().key)
+
+                val lastDate = Calendar.getInstance()
+                lastDate.time = dateFormat.parse(p0.children.last().key)
+
+                while (firstDate.compareTo(lastDate) != 1) {
+                    val date = saveDateFormat.format(Date(firstDate.timeInMillis))
+                    println(date)
+                    newAlcohols.put(date, mutableListOf(Alcohol("2018/$date/오전 00:00", 0.0)))
+                    firstDate.add(Calendar.DATE, 1)
+                }
+
                 children
                         .asSequence()
                         .map { it.children }
@@ -31,16 +48,11 @@ class AlcoholModel{
                         .map { it.getValue<Alcohol>(Alcohol::class.java) }
                         .forEach {
                             it?.let {
-                                val date = it.timestamp.split('/')[0]
-                                var values = newAlcohols[date]
-                                if (values == null){
-                                    newAlcohols.put(date, mutableListOf())
-                                    values = newAlcohols[date]
-                                }
+                                val date = it.timestamp.split('/')[1]
+                                val values = newAlcohols[date]
                                 values?.add(Alcohol(it.timestamp, it.value))
                             }
                         }
-
                 alcohols = newAlcohols
                 onDataChangedListener?.onDataChanged()
             }
@@ -53,10 +65,11 @@ class AlcoholModel{
     }
 
 
-    fun addAlcohol(value: Double){
-        val saveAlcohol = Alcohol.newAlcohol(value)
-        val date = saveAlcohol.timestamp.split('/')[0].split('.')
-        val childRef: DatabaseReference? = ref?.child(date[0]+date[1])?.push()
+    fun addAlcohol(timestamp: String = "", value: Double){
+        val saveAlcohol = Alcohol.newAlcohol(timestamp = timestamp, value = value)
+        val date = saveAlcohol.timestamp.split('/')[1].split('.')
+        val childRef: DatabaseReference? = ref?.child(date[0]+"-"+date[1])?.push()
+
         childRef?.setValue(saveAlcohol)
     }
 
@@ -65,7 +78,6 @@ class AlcoholModel{
 
         for (alcohols in alcohols!!){
             alcohols.value.sortBy { it.value }
-            alcohols.value.forEach { println(it.timestamp+it.value) }
             val alcohol = alcohols.value[alcohols.value.size-1]
             maxAlcohols.add(alcohol)
         }

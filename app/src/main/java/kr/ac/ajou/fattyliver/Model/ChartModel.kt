@@ -29,7 +29,7 @@ class ChartModel {
         for (data : Alcohol in dataList){
 
             pointList?.add(Entry(dataCount, data.value.toFloat()))
-            labels?.add(data.timestamp.split("/")[0])
+            labels?.add(data.timestamp.split("/")[1])
             dataCount++
         }
 

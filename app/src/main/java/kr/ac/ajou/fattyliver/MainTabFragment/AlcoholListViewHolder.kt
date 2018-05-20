@@ -11,18 +11,14 @@ class AlcoholListViewHolder(parent : ViewGroup) : AbstractViewHolder<Alcohol>(La
 
     private var dateTextView : TextView? = null
     private var firstValueTextView : TextView? = null
-    private var secondValueTextView : TextView? = null
-    private var thirdValueTextView : TextView? = null
 
     init {
         dateTextView = itemView.findViewById(R.id.text_date)
-        firstValueTextView = itemView.findViewById(R.id.text_firstValue)
-        secondValueTextView = itemView.findViewById(R.id.text_secondValue)
-        thirdValueTextView = itemView.findViewById(R.id.text_thirdValue)
+        firstValueTextView = itemView.findViewById(R.id.textView_value)
     }
 
     override fun onBindView(item: Alcohol, position: Int) {
-        dateTextView?.text = item.timestamp.split("/")[0]
+        dateTextView?.text = item.timestamp.split("/")[1]
         firstValueTextView?.text = item.value.toString()
     }
 

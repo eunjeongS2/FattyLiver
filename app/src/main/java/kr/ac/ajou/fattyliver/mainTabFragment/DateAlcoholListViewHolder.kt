@@ -19,7 +19,7 @@ class DateAlcoholListViewHolder(parent : ViewGroup) : AbstractViewHolder<Alcohol
     }
 
     override fun onBindView(item: Alcohol, position: Int) {
-        dateTimeTextView?.text = item.timestamp.split('/')[1]
+        dateTimeTextView?.text = item.timestamp.split('/')[2]
         dateValueTextView?.text = item.value.toString()
     }
 
