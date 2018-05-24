@@ -7,9 +7,7 @@ import com.github.mikephil.charting.data.LineDataSet
 class ChartModel {
     private var onChartLoadListener : OnChartLoadListener? = null
     private var pointList : ArrayList<Entry>? = null
-    private var dataSet : LineDataSet? = null
     private var labels : MutableSet<String>? = null
-    private var dataList: MutableList<Alcohol>? = null
     private var alcohols : MutableMap<String, MutableList<Double>>? = null
 
     init {
@@ -19,7 +17,6 @@ class ChartModel {
 
     }
     fun setDataList(dataList: MutableList<Alcohol>){
-        this.dataList = dataList
         alcohols = mutableMapOf()
 
         pointList = arrayListOf()
@@ -44,8 +41,8 @@ class ChartModel {
     }
 
     fun loadChart(){
-        dataSet = LineDataSet(pointList, "Alcohol")
-        labels?.let { labels -> dataSet?.let { dataSet -> onChartLoadListener?.onLoad(dataSet, labels) } }
+        val dataSet = LineDataSet(pointList, "Alcohol")
+        labels?.let { labels -> dataSet.let { dataSet -> onChartLoadListener?.onLoad(dataSet, labels) } }
     }
 
 }

@@ -1,5 +1,6 @@
 package kr.ac.ajou.fattyliver.mainTabFragment
 
+import android.annotation.SuppressLint
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.graphics.Color
@@ -11,7 +12,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
@@ -23,24 +27,31 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import kotlinx.android.synthetic.main.fragment_main_tab.view.*
 import kr.ac.ajou.fattyliver.OnDataChangedListener
 import kr.ac.ajou.fattyliver.R
 import kr.ac.ajou.fattyliver.model.Alcohol
 import kr.ac.ajou.fattyliver.model.AlcoholModel
 import kr.ac.ajou.fattyliver.model.ChartModel
+import kr.ac.ajou.fattyliver.model.UserModel
 
 class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChangedListener, OnChartValueSelectedListener, CalendarFragment.OnDateChangedListener {
 
-    private var idTextView : TextView? = null
-    private var calendarImageView : ImageView? = null
-    private var chartView : LineChart? = null
+    private lateinit var idTextView : TextView
+    private lateinit var calendarImageView : ImageView
+    private lateinit var chartView : LineChart
     private var xAxis : XAxis? = null
     private var yAxis : YAxis? = null
-    private var alcoholListRecyclerView : RecyclerView? = null
+    private lateinit var alcoholListRecyclerView : RecyclerView
+    private lateinit var liverImageView : ImageView
+    private lateinit var fattyLiverImageView : ImageView
+    private lateinit var averageTextView : TextView
+    private lateinit var colorTextView : TextView
+    private lateinit var progressBar : ProgressBar
+
     private var adapter : AlcoholListRecyclerAdapter? = null
     private var chartModel : ChartModel? = null
     private var alcoholModel : AlcoholModel? = null
-    private var fattyLiverImageView : ImageView? = null
     private var alcohols : MutableList<Alcohol>? = null
     private var filterAlcohols : MutableList<Alcohol>? = null
 
@@ -48,17 +59,25 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
         const val REQUEST_CODE = 300
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = LayoutInflater.from(context).inflate(R.layout.fragment_main_tab, container, false)
-        idTextView = view.findViewById(R.id.textView_id)
-        calendarImageView = view.findViewById(R.id.imageView_calendar)
-        chartView = view.findViewById(R.id.chart_line)
-        alcoholListRecyclerView = view.findViewById(R.id.recyclerView_main)
-        fattyLiverImageView = view.findViewById(R.id.imageView_fattyliver)
+        idTextView = view.textView_id
+        calendarImageView = view.imageView_calendar
+        chartView = view.chart_line
+        alcoholListRecyclerView = view.recyclerView_main
+        liverImageView = view.imageView_liver
+        fattyLiverImageView = view.imageView_fattyliver
+        averageTextView = view.textView_average
+        colorTextView = view.textView_color
+        progressBar = view.progressBar_main
 
-        println(arguments?.getStringArrayList("selectedDates"))
+        setViewVisible(View.INVISIBLE)
+        progressBar.visibility = View.VISIBLE
 
-        calendarImageView?.setOnClickListener {
+        idTextView.text = "${UserModel.instance.user?.name} 님!"
+
+        calendarImageView.setOnClickListener {
             val dialog = CalendarFragment()
             val transaction : FragmentTransaction? = fragmentManager?.beginTransaction()
             transaction?.addToBackStack(null)
@@ -76,7 +95,9 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
         filterAlcohols = mutableListOf()
 
         alcoholModel = AlcoholModel()
+
         alcoholModel?.setOnDataChangedListener(this)
+
         chartModel = ChartModel()
         chartModel?.setOnChartLoadListener(this)
 
@@ -88,33 +109,33 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
     }
 
     private fun initChart(){
-        chartView?.setOnChartValueSelectedListener(this)
-        chartView?.axisRight?.isEnabled = false
-        chartView?.setTouchEnabled(true)
-        chartView?.isDragEnabled = false
-        chartView?.setScaleEnabled(false)
-        chartView?.setPinchZoom(false)
-        chartView?.setDrawGridBackground(true)
-        chartView?.description?.isEnabled = false
-        chartView?.legend?.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+        chartView.setOnChartValueSelectedListener(this)
+        chartView.axisRight?.isEnabled = false
+        chartView.setTouchEnabled(true)
+        chartView.isDragEnabled = false
+        chartView.setScaleEnabled(false)
+        chartView.setPinchZoom(false)
+        chartView.setDrawGridBackground(true)
+        chartView.description?.isEnabled = false
+        chartView.legend?.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
 
-        xAxis = chartView?.xAxis
+        xAxis = chartView.xAxis
         xAxis?.textSize = 10f
         xAxis?.textColor = Color.BLACK
 
         xAxis?.setDrawAxisLine(true)
         xAxis?.setDrawGridLines(false)
 
-        yAxis = chartView?.axisLeft
+        yAxis = chartView.axisLeft
 
         xAxis?.position = XAxis.XAxisPosition.BOTTOM
     }
 
     private fun setUpAlcoholListView(){
         val manager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        alcoholListRecyclerView?.layoutManager = manager
+        alcoholListRecyclerView.layoutManager = manager
         adapter = AlcoholListRecyclerAdapter()
-        alcoholListRecyclerView?.adapter = adapter
+        alcoholListRecyclerView.adapter = adapter
 
     }
 
@@ -125,31 +146,35 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
         dataSet.lineWidth = 1.5f
         dataSet.valueTextSize = 8F
 
-        chartView?.data = LineData(dataSet)
+        chartView.data = LineData(dataSet)
         xAxis?.granularity = 1f
         xAxis?.valueFormatter = IndexAxisValueFormatter(labels)
         xAxis?.labelCount = labels.size
 
-        chartView?.animateXY(500, 2000)
-        chartView?.invalidate()
+        chartView.animateXY(500, 2000)
+        chartView.invalidate()
     }
 
     override fun onDataChanged() {
+        progressBar.visibility = View.INVISIBLE
+
         alcohols = alcoholModel?.getMaxAlcohols()
 
-        if (filterAlcohols?.size == 0){
+
+        if (filterAlcohols?.size == 0) {
             if (alcohols?.size!! <= 5)
                 filterAlcohols = alcohols
-            else{
-                alcohols?.get(0)?.let { filterAlcohols?.add(it) }
-                alcohols?.get(1)?.let { filterAlcohols?.add(it) }
-                alcohols?.get(2)?.let { filterAlcohols?.add(it) }
-                alcohols?.get(3)?.let { filterAlcohols?.add(it) }
-                alcohols?.get(4)?.let { filterAlcohols?.add(it) }
+            else {
+                alcohols?.get(alcohols?.size!!-5)?.let { filterAlcohols?.add(it) }
+                alcohols?.get(alcohols?.size!!-4)?.let { filterAlcohols?.add(it) }
+                alcohols?.get(alcohols?.size!!-3)?.let { filterAlcohols?.add(it) }
+                alcohols?.get(alcohols?.size!!-2)?.let { filterAlcohols?.add(it) }
+                alcohols?.get(alcohols?.size!!-1)?.let { filterAlcohols?.add(it) }
             }
         }
 
         updateView()
+
     }
 
     private fun loadChart(alcohols: MutableList<Alcohol>?) {
@@ -185,17 +210,46 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
 
             saveAlcohol?.let { it1 -> filterAlcohols?.add(it1) }
         }
+
         updateView()
+
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateView(){
+        setViewVisible(View.VISIBLE)
+
         val alcoholsMap = filterAlcohols?.map { it.timestamp to it.value }?.toMap()
 
-        fattyLiverImageView?.alpha = (alcoholsMap?.values?.average()?.div(0.3))?.toFloat()!!
-        println(fattyLiverImageView?.alpha)
+        var average = 0.0
+
+        if (filterAlcohols?.size != 0) {
+            loadChart(filterAlcohols)
+            average = alcoholsMap?.values?.average()!!
+        }
+
+        fattyLiverImageView.alpha = (average.div(0.3)).toFloat()
+        averageTextView.text = "평균 : ${average.toFloat()}"
 
         filterAlcohols?.let { adapter?.setItems(it) }
         adapter?.notifyDataSetChanged()
-        loadChart(filterAlcohols)
+
+
+        val animation : Animation = AnimationUtils.loadAnimation(context, R.anim.animation_scale)
+
+        liverImageView.startAnimation(animation)
+        fattyLiverImageView.startAnimation(animation)
+
     }
+
+    private fun setViewVisible(invisible: Int) {
+        calendarImageView.visibility = invisible
+        chartView.visibility = invisible
+        alcoholListRecyclerView.visibility = invisible
+        liverImageView.visibility = invisible
+        fattyLiverImageView.visibility = invisible
+        averageTextView.visibility = invisible
+        colorTextView.visibility = invisible
+    }
+
 }

@@ -6,18 +6,18 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class AlcoholModel{
-    var alcohols : MutableMap<String, MutableList<Alcohol>>? = null
+    private var alcohols : MutableMap<String, MutableList<Alcohol>>? = null
     private var onDataChangedListener : OnDataChangedListener? = null
 
-    private var database : FirebaseDatabase? = null
     private var ref : DatabaseReference? = null
 
     init {
         alcohols = mutableMapOf()
-        database = FirebaseDatabase.getInstance()
-        ref = database?.getReference("alcohols")
-        val dateFormat = SimpleDateFormat("M-d", Locale.KOREA)
-        val saveDateFormat = SimpleDateFormat("M.d", Locale.KOREA)
+        val database = FirebaseDatabase.getInstance()
+        ref = database?.getReference("user")?.child(UserModel.instance.user?.uid)?.child("alcohols")
+
+        val dateFormat = SimpleDateFormat("yyyy/M-d", Locale.KOREA)
+        val compareFormat = SimpleDateFormat("yyyy/M.d", Locale.KOREA)
 
         this.ref?.addValueEventListener(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {
@@ -28,19 +28,21 @@ class AlcoholModel{
                 val newAlcohols: MutableMap<String, MutableList<Alcohol>> = mutableMapOf()
                 val children: Iterable<DataSnapshot> = p0!!.children
 
-                val firstDate = Calendar.getInstance()
-                firstDate.time = dateFormat.parse(p0.children.first().key)
+                if(p0.value != null){
+                    val firstDate = Calendar.getInstance()
 
-                val lastDate = Calendar.getInstance()
-                lastDate.time = dateFormat.parse(p0.children.last().key)
+                    val lastDate = Calendar.getInstance()
+                    lastDate.time = Date()
 
-                while (firstDate.compareTo(lastDate) != 1) {
-                    val date = saveDateFormat.format(Date(firstDate.timeInMillis))
-                    println(date)
-                    newAlcohols.put(date, mutableListOf(Alcohol("2018/$date/오전 00:00", 0.0)))
-                    firstDate.add(Calendar.DATE, 1)
+                    firstDate.time = dateFormat.parse("${lastDate.get(Calendar.YEAR)}/${p0.children.first().key}")
+
+                    while (firstDate.compareTo(lastDate) != 1) {
+                        val compare = compareFormat.format(Date(firstDate.timeInMillis))
+
+                        newAlcohols.put(compare.split("/")[1], mutableListOf(Alcohol("$compare/오전 00:00", 0.0)))
+                        firstDate.add(Calendar.DATE, 1)
+                    }
                 }
-
                 children
                         .asSequence()
                         .map { it.children }

@@ -6,6 +6,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ProgressBar
+        android:id="@+id/progressBar_main"
+        style="?android:attr/progressBarStyle"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/colorBlue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView_id"
         android:layout_width="wrap_content"
@@ -14,12 +31,14 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/imageView_calendar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.06999999"
         tools:text="사용자 아이디" />
 
     <ImageView
@@ -34,14 +53,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView_id"
         app:layout_constraintVertical_bias="1"
-        app:srcCompat="@drawable/calendar" />
+        app:srcCompat="@drawable/calendar"
+        android:contentDescription="TODO" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_main_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.20" />
+        app:layout_constraintGuide_percent="0.21" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/chart_line"
@@ -63,14 +83,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55" />
+        app:layout_constraintGuide_percent="0.57" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView_main"
         android:layout_width="180dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="28dp"
         android:layout_marginEnd="8dp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -81,40 +102,52 @@
     </android.support.v7.widget.RecyclerView>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView_color"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
-        android:text="최근 나의 간 색깔은 ?"
+        android:text="나의 간 색깔은 ?"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/recyclerView_main"
         app:layout_constraintTop_toTopOf="@+id/guideline_main_bottom"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView_average"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView_main"
+        app:layout_constraintTop_toBottomOf="@+id/textView_color"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="0.042" />
 
     <ImageView
         android:id="@+id/imageView_liver"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recyclerView_main"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView_color"
         app:srcCompat="@drawable/liver" />
 
     <ImageView
         android:id="@+id/imageView_fattyliver"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
@@ -122,7 +155,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recyclerView_main"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView_color"
         app:srcCompat="@drawable/fattyliver" />
 
 

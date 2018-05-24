@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
-    tools:layout_editor_absoluteY="25dp">
+    tools:context="kr.ac.ajou.fattyliver.SignUpActivity">
 
     <ImageView
-        android:id="@+id/imageView_login_liver"
+        android:id="@+id/imageView_signUp_liver"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -26,97 +25,117 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.44" />
+        app:layout_constraintGuide_percent="0.39" />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/login_id_layout"
+        android:id="@+id/signUp_name_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textView_error"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="40dp"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline_login"
-        app:layout_constraintVertical_bias="0.04000002">
+        app:layout_constraintVertical_bias="0.0">
 
         <EditText
-            android:id="@+id/editText_login_id"
+            android:id="@+id/editText_signUp_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="닉네임"
+            android:text="은동우동" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/signUp_id_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUp_name_layout"
+        app:layout_constraintVertical_bias="0.0">
+
+        <EditText
+            android:id="@+id/editText_signUp_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ID"
-            android:text="dmswjd2340@naver.com"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:text="dmswjd2340@naver.com" />
 
     </android.support.design.widget.TextInputLayout>
 
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/login_password_layout"
+        android:id="@+id/signUp_password_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/login_id_layout"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_login"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_id_layout"
+        app:layout_constraintTop_toBottomOf="@+id/signUp_id_layout"
         app:layout_constraintVertical_bias="0.0">
 
         <EditText
-            android:id="@+id/editText_login_password"
+            android:id="@+id/editText_signUp_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:text="123456"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:text="123456" />
 
     </android.support.design.widget.TextInputLayout>
 
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/button_login"
+        android:id="@+id/button_signUp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/login_password_layout"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/white_rounded_button"
         android:padding="12dp"
-        android:text="로그인"
+        android:text="회원가입"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_login_liver"
-        app:layout_constraintVertical_bias="0.45" />
+        app:layout_constraintTop_toBottomOf="@+id/signUp_password_layout"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView_error"
+        android:id="@+id/textView_signUp_error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:text="닉네임, 아이디, 비빌번호를 입력해주세요 !"
         android:textAlignment="center"
         android:textColor="@color/colorBad"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_login"
-        app:layout_constraintVertical_bias="0.100000024"
-        android:text = "아이디와 비빌번호를 입력해주세요 !"
-        tools:text="존재하지 않는 아이디나 비빌번호입니다 !" />
+        app:layout_constraintTop_toBottomOf="@+id/button_signUp"
+        app:layout_constraintVertical_bias="0.13" />
 
     <ProgressBar
-        android:id="@+id/progressBar_login"
+        android:id="@+id/progressBar_signUp"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -128,7 +147,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_login"
-        app:layout_constraintVertical_bias="0.100000024"/>
+        app:layout_constraintTop_toBottomOf="@+id/button_signUp"
+        app:layout_constraintVertical_bias="0.060000002" />
+
 
 </android.support.constraint.ConstraintLayout>

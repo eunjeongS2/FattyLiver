@@ -15,6 +15,18 @@
       },
       "oauth_client": [
         {
+          "client_id": "157524436686-k6k539qsmn8lmgccdhud1adehfdao17h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.ac.ajou.fattyliver",
+            "certificate_hash": "26f2f489501890a82dedc7bb9219eba79bb7881b"
+          }
+        },
+        {
+          "client_id": "157524436686-othr6j0t97uvebh8l9prfdic5o3uoi2j.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
           "client_id": "157524436686-othr6j0t97uvebh8l9prfdic5o3uoi2j.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +41,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "157524436686-othr6j0t97uvebh8l9prfdic5o3uoi2j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
