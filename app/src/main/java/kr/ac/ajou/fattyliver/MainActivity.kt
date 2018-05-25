@@ -6,6 +6,8 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.view.MenuItem
+import kr.ac.ajou.fattyliver.AlarmFragment.ReleaseAlarmFragment
+import kr.ac.ajou.fattyliver.AlarmFragment.Tab2Fragment
 import kr.ac.ajou.fattyliver.mainTabFragment.MainTabFragment
 
 
@@ -45,20 +47,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val notiString = intent.getStringExtra("ReleaseAlarmFragment")
+        val password = intent.getStringExtra("password")
+        val phone = intent.getStringExtra("phone")
+
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.main_bottom_navigation)
         BottomNavigationViewHelper.removeShiftMode(bottomNavigationView)
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-//        for (i in 0 until bottomNavigationView.childCount) {
-//            val iconView: View = bottomNavigationView.getChildAt(i).findViewById(android.support.design.R.id.icon)
-//            val layoutParams = iconView.layoutParams
-//            val displayMetrics = resources.displayMetrics
-//            layoutParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32f, displayMetrics).toInt()
-//            layoutParams.width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32f, displayMetrics).toInt()
-//            iconView.layoutParams = layoutParams
-//        }
 
         val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.main_container, MainTabFragment()).commit()
+
+        if(notiString != null) {
+            if(notiString == "notiIntent") {
+                val fragment = ReleaseAlarmFragment()
+                val bundle = Bundle()
+                bundle.putString("password", password)
+                bundle.putString("phone", phone)
+                fragment.setArguments(bundle)
+                fragmentTransaction.addToBackStack(null).replace(R.id.main_container, fragment).commit()
+            }
+        } else {
+            fragmentTransaction.add(R.id.main_container, MainTabFragment()).commit()
+        }
+
     }
 
 }

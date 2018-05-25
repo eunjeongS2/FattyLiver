@@ -26,10 +26,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.d(TAG, "${p0.notification?.body}")
 
             // 안드로이드 켜질 때 화면 켜짐
-            val pm: PowerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
-            val wakeLock: PowerManager.WakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP, TAG)
-            wakeLock.acquire(3000)
+//            val pm: PowerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+//            val wakeLock: PowerManager.WakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP, TAG)
+//            wakeLock.acquire(3000)
 
+//            val title = p0.data["title"]
+//            val body = p0.data["body"]
+//            Log.d(TAG, title+body)
             sendNotification(p0.notification?.body.toString(), p0.notification?.title.toString())
 
         }

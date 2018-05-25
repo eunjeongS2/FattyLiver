@@ -2,7 +2,6 @@ package kr.ac.ajou.fattyliver.model
 
 import android.util.Log
 import com.google.firebase.database.*
-import kr.ac.ajou.fattyliver.Tab2Fragment
 import org.json.JSONObject
 import java.io.OutputStream
 import java.net.HttpURLConnection
@@ -10,11 +9,9 @@ import java.net.URL
 
 
 class AlarmModel {
-    companion object {
-        const val TAG = "AlarmModel"
-        const val FCM_MESSAGE_URL = "https://fcm.googleapis.com/fcm/send"
-        const val SERVER_KEY = "AAAAJK0wJs4:APA91bFgNobtyghiC9XqXpvWBQBDWRA8RxAPymqZ9JVGQQQU0I0CI50U_3AgQOVsDLj-ql2e1aA2Mlx1b0ZVBT1hKYa7JSL_IgCFQu7zzXXBIw6mZKTrVKG4EHRMxaBgtWdTqNnTXgsd"
-    }
+    private val TAG = "AlarmModel"
+    private val FCM_MESSAGE_URL = "https://fcm.googleapis.com/fcm/send"
+    private val SERVER_KEY = "AAAAJK0wJs4:APA91bFgNobtyghiC9XqXpvWBQBDWRA8RxAPymqZ9JVGQQQU0I0CI50U_3AgQOVsDLj-ql2e1aA2Mlx1b0ZVBT1hKYa7JSL_IgCFQu7zzXXBIw6mZKTrVKG4EHRMxaBgtWdTqNnTXgsd"
 
     private var alarmRef: DatabaseReference
 
@@ -27,11 +24,9 @@ class AlarmModel {
 
     init {
         alarms = mutableListOf()
-//        alarmList?.add(Alarm("오전", "6:55", "01012345678"))
-//        alarmList?.add(Alarm("오후", "7:05", "01012345678"))
 
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-        alarmRef = database.getReference("alarms")
+        alarmRef = database.getReference("user").child(UserModel.instance.user?.uid).child("alarms")
         alarmRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {
                 println(p0?.message)

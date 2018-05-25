@@ -1,4 +1,4 @@
-package kr.ac.ajou.fattyliver
+package kr.ac.ajou.fattyliver.AlarmFragment
 
 
 import android.os.Bundle
@@ -12,11 +12,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.support.v7.widget.DividerItemDecoration
+import kr.ac.ajou.fattyliver.AddAlarmFragment
+import kr.ac.ajou.fattyliver.R
 import kr.ac.ajou.fattyliver.model.Alarm
 import kr.ac.ajou.fattyliver.model.AlarmModel
 
 
-class Tab2Fragment : Fragment(), AlarmModel.OnAlarmLoadListener, AbstractRecyclerAdapter.OnItemLongClickListener<Alarm> {
+class Tab2Fragment : Fragment(), AlarmModel.OnAlarmLoadListener{
 
     private var adapter: AlarmListRecyclerAdapter? = null
     private var alarmRecyclerView: RecyclerView? = null
@@ -74,11 +76,7 @@ class Tab2Fragment : Fragment(), AlarmModel.OnAlarmLoadListener, AbstractRecycle
         adapter?.setItems(alarmList)
         adapter?.notifyDataSetChanged()
         alarmRecyclerView?.scrollToPosition(alarmList.size - 1)
-        adapter?.setOnItemLongClickListener(this)
-    }
 
-    override fun onItemLongClick(item: Alarm, position: Int) {
-        print(item.time)
     }
 
 }

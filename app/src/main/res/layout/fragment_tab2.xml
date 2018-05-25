@@ -20,8 +20,7 @@
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_alarm_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorBlack"/>
+            android:layout_height="wrap_content"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

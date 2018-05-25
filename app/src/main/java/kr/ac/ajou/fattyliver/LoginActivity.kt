@@ -34,6 +34,11 @@ class LoginActivity : AppCompatActivity(), UserModel.OnLoginListener {
 
         }
 
+        signup_textView.setOnClickListener {
+            val intent = Intent(applicationContext, SignUpActivity::class.java)
+            startActivity(intent)
+        }
+
     }
     override fun onSuccess() {
         val intent = Intent(applicationContext, MainActivity::class.java)

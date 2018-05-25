@@ -1,4 +1,4 @@
-package kr.ac.ajou.fattyliver.alarmFragment
+package kr.ac.ajou.fattyliver.AlarmFragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

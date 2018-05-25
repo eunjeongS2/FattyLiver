@@ -10,8 +10,8 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +32,7 @@
                 android:layout_marginEnd="10dp"
                 android:text="오전/오후"
                 android:textColor="@color/colorBlack"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/alarm_time_text"
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="알람울리는 시간"
                 android:textColor="@color/colorBlack"
-                android:textSize="35sp" />
+                android:textSize="30sp" />
 
         </LinearLayout>
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:text="문자 가는 번호"
             android:textColor="@color/colorGray"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 
