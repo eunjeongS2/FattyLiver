@@ -14,11 +14,11 @@ import android.view.ViewGroup
 import android.support.v7.widget.DividerItemDecoration
 import kr.ac.ajou.fattyliver.AddAlarmFragment
 import kr.ac.ajou.fattyliver.R
-import kr.ac.ajou.fattyliver.model.Alarm
+import kr.ac.ajou.fattyliver.Model.Alarm
 import kr.ac.ajou.fattyliver.model.AlarmModel
 
 
-class Tab2Fragment : Fragment(), AlarmModel.OnAlarmLoadListener{
+class Tab2Fragment : Fragment(), AlarmModel.OnAlarmLoadListener {
 
     private var adapter: AlarmListRecyclerAdapter? = null
     private var alarmRecyclerView: RecyclerView? = null
@@ -46,10 +46,9 @@ class Tab2Fragment : Fragment(), AlarmModel.OnAlarmLoadListener{
 
         alarmModel = AlarmModel()
         alarmModel?.setOnAlarmLoadListener(this)
-        alarmModel?.fetchAlarm()
+//        alarmModel?.fetchAlarm()
 
         addAlarmButton.setOnClickListener {
-            //            val fmanager: FragmentManager? = activity?.supportFragmentManager
             val fmanager: FragmentManager? = fragmentManager
             val ftrans: FragmentTransaction? = fmanager?.beginTransaction()
             ftrans?.replace(R.id.main_container, AddAlarmFragment())

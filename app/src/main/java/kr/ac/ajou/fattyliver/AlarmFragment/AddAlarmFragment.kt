@@ -121,7 +121,7 @@ class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
     }
 
     private fun set2CharNum(num: Int): String {
-        var number = ""
+        var number: String
         if (num >= 10)
             number = num.toString() + ""
         else

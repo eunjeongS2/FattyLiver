@@ -2,11 +2,9 @@ package kr.ac.ajou.fattyliver.AlarmFragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import android.widget.Switch
 import android.widget.TextView
 import kr.ac.ajou.fattyliver.AbstractViewHolder
-import kr.ac.ajou.fattyliver.model.Alarm
+import kr.ac.ajou.fattyliver.Model.Alarm
 import kr.ac.ajou.fattyliver.R
 
 class AlarmListViewHolder(parent: ViewGroup) : AbstractViewHolder<Alarm>(

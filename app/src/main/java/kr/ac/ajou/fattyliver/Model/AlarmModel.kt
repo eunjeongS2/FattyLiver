@@ -2,6 +2,7 @@ package kr.ac.ajou.fattyliver.model
 
 import android.util.Log
 import com.google.firebase.database.*
+import kr.ac.ajou.fattyliver.Model.Alarm
 import org.json.JSONObject
 import java.io.OutputStream
 import java.net.HttpURLConnection
@@ -51,10 +52,10 @@ class AlarmModel {
 
     }
 
-
     fun setOnAlarmLoadListener(onAlarmLoadListener: OnAlarmLoadListener) {
         this.onAlarmLoadListener = onAlarmLoadListener
     }
+
 
     fun fetchAlarm() {
         if (onAlarmLoadListener != null)
@@ -68,6 +69,10 @@ class AlarmModel {
 
     fun deleteAlarm(alarmId: String) {
         alarmRef.child(alarmId).removeValue()
+    }
+
+    fun changeAlarmActivate(alarmId: String?, activate: Boolean) {
+        alarmRef.child(alarmId).child("activate").setValue(activate)
     }
 
     // push notification 전송
