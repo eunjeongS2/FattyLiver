@@ -27,7 +27,6 @@ class AlarmListRecyclerAdapter : AbstractRecyclerAdapter<Alarm>() {
         val switch: Switch = holder.itemView.findViewById(R.id.alarm_switch)
         switch.isChecked = getItem(position)?.activate!!
         switch.setOnClickListener { getItem(position)?.alarmId?.let { it1 -> alarmModel.changeAlarmActivate(it1, switch.isChecked) } }
-//        switch.setOnClickListener { onAlarmChangedListener?.onAlarmChange(getItem(position)?.alarmId, switch.isChecked) }
 
     }
 }

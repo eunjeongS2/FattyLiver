@@ -9,14 +9,10 @@ abstract class AbstractRecyclerAdapter<T> : RecyclerView.Adapter<AbstractViewHol
 
     private var items: MutableList<T>? = null
 
-    private var onItemClickListener: OnItemClickListener<T>? = null
+    var onItemClickListener: OnItemClickListener<T>? = null
 
     interface OnItemClickListener<in T> {
         fun onItemClick(item: T, position: Int)
-    }
-
-    fun setOnItemClickListener(onItemClickListener: OnItemClickListener<T>) {
-        this.onItemClickListener = onItemClickListener
     }
 
     init {

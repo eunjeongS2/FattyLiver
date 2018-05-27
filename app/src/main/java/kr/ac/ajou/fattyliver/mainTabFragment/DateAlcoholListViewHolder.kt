@@ -10,8 +10,8 @@ import kr.ac.ajou.fattyliver.model.Alcohol
 
 class DateAlcoholListViewHolder(parent : ViewGroup) : AbstractViewHolder<Alcohol>(LayoutInflater.from(parent.context).inflate(R.layout.item_date_alcohol, parent, false)) {
 
-    private var dateTimeTextView : TextView = itemView.textView_date_time
-    private var dateValueTextView : TextView = itemView.textView_date_value
+    private val dateTimeTextView : TextView = itemView.textView_date_time
+    private val dateValueTextView : TextView = itemView.textView_date_value
 
 
     override fun onBindView(item: Alcohol, position: Int) {

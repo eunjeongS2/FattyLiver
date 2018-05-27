@@ -1,15 +1,18 @@
 package kr.ac.ajou.fattyliver.model
 
 import com.google.firebase.database.*
-import kr.ac.ajou.fattyliver.OnDataChangedListener
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AlcoholModel{
     private var alcohols : MutableMap<String, MutableList<Alcohol>>? = null
-    private var onDataChangedListener : OnDataChangedListener? = null
+    var onDataChangedListener : OnDataChangedListener? = null
 
     private var ref : DatabaseReference? = null
+
+    interface OnDataChangedListener{
+        fun onDataChanged()
+    }
 
     init {
         alcohols = mutableMapOf()
@@ -28,7 +31,7 @@ class AlcoholModel{
                 val newAlcohols: MutableMap<String, MutableList<Alcohol>> = mutableMapOf()
                 val children: Iterable<DataSnapshot> = p0.children
 
-                if(p0.value != null){
+                p0.value?.let {
                     val firstDate = Calendar.getInstance()
 
                     val lastDate = Calendar.getInstance()
@@ -43,6 +46,7 @@ class AlcoholModel{
                         firstDate.add(Calendar.DATE, 1)
                     }
                 }
+
                 children
                         .asSequence()
                         .map { it.children }
@@ -59,10 +63,6 @@ class AlcoholModel{
                 onDataChangedListener?.onDataChanged()            }
 
         })
-    }
-
-    fun setOnDataChangedListener(onDataChangedListener: OnDataChangedListener){
-        this.onDataChangedListener = onDataChangedListener
     }
 
 

@@ -1,9 +1,8 @@
 package kr.ac.ajou.fattyliver.model
 
 import com.google.firebase.database.*
-import kr.ac.ajou.fattyliver.OnDataChangedListener
 
-class ChatModel {
+class ChatModel(chatId: String) {
     private var chats: MutableList<Chat>? = null
     //private var onDataChangedListener : OnDataChangedListener? = null
     private var onChatLoadListener: OnChatLoadListener? = null
@@ -12,14 +11,14 @@ class ChatModel {
         fun onFetchChat(chatList: MutableList<Chat>)
     }
 
-
     private var chatRef : DatabaseReference? = null
 
     init {
         chats = mutableListOf()
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         //chatRef = database.getReference("user").child(UserModel.instance.user?.uid).child("chats")
-        chatRef = database.getReference("chats")
+        chatRef = database.getReference("chats").child(chatId).child("message")
+
 
         this.chatRef?.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -38,8 +37,6 @@ class ChatModel {
                 chats = newChats
                 onChatLoadListener?.onFetchChat(chats!!)
             }
-
-
         })
 
     }

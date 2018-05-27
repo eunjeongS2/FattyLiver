@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction
 import kr.ac.ajou.fattyliver.alarmFragment.AlarmFragment
 import kr.ac.ajou.fattyliver.alarmFragment.ReleaseAlarmFragment
 import kr.ac.ajou.fattyliver.chatFragment.ChatFragment
+import kr.ac.ajou.fattyliver.chatFragment.ChatListFragment
 import kr.ac.ajou.fattyliver.mainTabFragment.MainTabFragment
 import kr.ac.ajou.fattyliver.mesurementFragment.MeasureFragment
 
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_community -> {
-                replaceFragment(ChatFragment())
+                replaceFragment(ChatListFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_alcohol -> {

@@ -5,7 +5,7 @@ import com.github.mikephil.charting.data.LineDataSet
 
 
 class ChartModel {
-    private var onChartLoadListener : OnChartLoadListener? = null
+    var onChartLoadListener : OnChartLoadListener? = null
     private var pointList : ArrayList<Entry>? = null
     private var labels : MutableSet<String>? = null
     private var alcohols : MutableMap<String, MutableList<Double>>? = null
@@ -34,10 +34,6 @@ class ChartModel {
 
     interface OnChartLoadListener {
         fun onLoad(dataSet: LineDataSet, labels: MutableSet<String>)
-    }
-
-    fun setOnChartLoadListener(onChartLoadListener: OnChartLoadListener) {
-        this.onChartLoadListener = onChartLoadListener
     }
 
     fun loadChart(){

@@ -27,14 +27,13 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
-import kr.ac.ajou.fattyliver.OnDataChangedListener
 import kr.ac.ajou.fattyliver.R
 import kr.ac.ajou.fattyliver.model.Alcohol
 import kr.ac.ajou.fattyliver.model.AlcoholModel
 import kr.ac.ajou.fattyliver.model.ChartModel
 import kr.ac.ajou.fattyliver.model.UserModel
 
-class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChangedListener, OnChartValueSelectedListener, CalendarFragment.OnDateChangedListener {
+class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel.OnDataChangedListener, OnChartValueSelectedListener, CalendarFragment.OnDateChangedListener {
 
     private lateinit var idTextView : TextView
     private lateinit var calendarImageView : ImageView
@@ -95,10 +94,10 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
 
         alcoholModel = AlcoholModel()
 
-        alcoholModel?.setOnDataChangedListener(this)
+        alcoholModel?.onDataChangedListener = this
 
         chartModel = ChartModel()
-        chartModel?.setOnChartLoadListener(this)
+        chartModel?.onChartLoadListener = this
 
         initChart()
 

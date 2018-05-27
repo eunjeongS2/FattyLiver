@@ -9,24 +9,28 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kr.ac.ajou.fattyliver.OnDataChangedListener
+import android.widget.ImageView
 
 import kr.ac.ajou.fattyliver.R
-import kr.ac.ajou.fattyliver.model.Alarm
 import kr.ac.ajou.fattyliver.model.Chat
 import kr.ac.ajou.fattyliver.model.ChatModel
 
 class ChatFragment : Fragment(), ChatModel.OnChatLoadListener {
 
+
     private var chatModel: ChatModel? = null
     private lateinit var chatListRecyclerView : RecyclerView
-    private var adapter : ChatListRecyclerAdapter? = null
+    private var adapter : ChatRecyclerAdapter? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
 
-        chatModel = ChatModel()
+        val chatId: String? = arguments?.getString("chatId")
+        val backButton : ImageView = view.findViewById(R.id.button_chat_cancel)
+
+        backButton.setOnClickListener{ fragmentManager?.popBackStackImmediate() }
+
+        chatModel = chatId?.let { ChatModel(it) }
 
         chatListRecyclerView = view.findViewById(R.id.chat_recyclerView)
         chatModel?.setOnChatLoadListener(this)
@@ -41,7 +45,6 @@ class ChatFragment : Fragment(), ChatModel.OnChatLoadListener {
                 chatModel?.sendMessage(message)
                 chatEdit.setText("")
             }
-
         }
 
         return view
@@ -50,7 +53,7 @@ class ChatFragment : Fragment(), ChatModel.OnChatLoadListener {
     private fun setUpChatListView() {
         val manager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         chatListRecyclerView.layoutManager = manager
-        adapter = ChatListRecyclerAdapter()
+        adapter = ChatRecyclerAdapter()
         chatListRecyclerView.adapter = adapter
     }
 
