@@ -14,19 +14,19 @@ class AlcoholModel{
     init {
         alcohols = mutableMapOf()
         val database = FirebaseDatabase.getInstance()
-        ref = database?.getReference("user")?.child(UserModel.instance.user?.uid)?.child("alcohols")
+        ref = UserModel.instance.user?.uid?.let { database.getReference("user").child(it).child("alcohols") }
 
         val dateFormat = SimpleDateFormat("yyyy/M-d", Locale.KOREA)
         val compareFormat = SimpleDateFormat("yyyy/M.d", Locale.KOREA)
 
         this.ref?.addValueEventListener(object: ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) {
-                println(p0?.message)
+            override fun onCancelled(p0: DatabaseError) {
+                println(p0.message)
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
+            override fun onDataChange(p0: DataSnapshot) {
                 val newAlcohols: MutableMap<String, MutableList<Alcohol>> = mutableMapOf()
-                val children: Iterable<DataSnapshot> = p0!!.children
+                val children: Iterable<DataSnapshot> = p0.children
 
                 if(p0.value != null){
                     val firstDate = Calendar.getInstance()
@@ -56,8 +56,7 @@ class AlcoholModel{
                             }
                         }
                 alcohols = newAlcohols
-                onDataChangedListener?.onDataChanged()
-            }
+                onDataChangedListener?.onDataChanged()            }
 
         })
     }

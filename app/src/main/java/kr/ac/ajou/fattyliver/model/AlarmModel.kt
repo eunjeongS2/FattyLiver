@@ -30,13 +30,13 @@ class AlarmModel {
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
         alarmRef = database.getReference("user").child(UserModel.instance.user?.uid).child("alarms")
         alarmRef.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) {
-                println(p0?.message)
+            override fun onCancelled(p0: DatabaseError) {
+                println(p0.message)
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
+            override fun onDataChange(p0: DataSnapshot) {
                 val newAlarms: MutableList<Alarm> = mutableListOf()
-                val children: MutableIterable<DataSnapshot>? = p0?.children
+                val children: MutableIterable<DataSnapshot>? = p0.children
 
                 for (e in children!!) {
                     val alarm: Alarm? = e.getValue(Alarm::class.java)
@@ -46,8 +46,8 @@ class AlarmModel {
                 alarms = newAlarms
                 if (onAlarmLoadListener != null) {
                     onAlarmLoadListener?.onFetchAlarm(alarms!!)
-                }
-            }
+                }            }
+
 
         })
 
@@ -65,7 +65,7 @@ class AlarmModel {
 
     fun saveAlarm(meridiem: String, time: String, phoneNum: String, password: String) {
         val childRef: DatabaseReference = alarmRef.push()
-        childRef.setValue(Alarm(childRef.key, meridiem, time, phoneNum, password))
+        childRef.setValue(childRef.key?.let { Alarm(it, meridiem, time, phoneNum, password) })
     }
 
     fun deleteAlarm(alarmId: String) {

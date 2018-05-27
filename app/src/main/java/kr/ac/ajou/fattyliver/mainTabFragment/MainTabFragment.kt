@@ -27,7 +27,6 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
-import kotlinx.android.synthetic.main.fragment_main_tab.view.*
 import kr.ac.ajou.fattyliver.OnDataChangedListener
 import kr.ac.ajou.fattyliver.R
 import kr.ac.ajou.fattyliver.model.Alcohol
@@ -62,15 +61,15 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
     @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = LayoutInflater.from(context).inflate(R.layout.fragment_main_tab, container, false)
-        idTextView = view.textView_id
-        calendarImageView = view.imageView_calendar
-        chartView = view.chart_line
-        alcoholListRecyclerView = view.recyclerView_main
-        liverImageView = view.imageView_liver
-        fattyLiverImageView = view.imageView_fattyliver
-        averageTextView = view.textView_average
-        colorTextView = view.textView_color
-        progressBar = view.progressBar_main
+        idTextView = view.findViewById(R.id.textView_id)
+        calendarImageView = view.findViewById(R.id.imageView_calendar)
+        chartView = view.findViewById(R.id.chart_line)
+        alcoholListRecyclerView = view.findViewById(R.id.recyclerView_main)
+        liverImageView = view.findViewById(R.id.imageView_liver)
+        fattyLiverImageView = view.findViewById(R.id.imageView_fattyliver)
+        averageTextView = view.findViewById(R.id.textView_average)
+        colorTextView = view.findViewById(R.id.textView_color)
+        progressBar = view.findViewById(R.id.progressBar_main)
 
         setViewVisible(View.INVISIBLE)
         progressBar.visibility = View.VISIBLE
@@ -140,19 +139,21 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
     }
 
     override fun onLoad(dataSet: LineDataSet, labels: MutableSet<String>) {
-        context?.let { ContextCompat.getColor(it, R.color.colorBlue) }?.let { dataSet.setCircleColor(it) }
-        dataSet.color = context?.let { ContextCompat.getColor(it, R.color.colorBlue) }!!
-        dataSet.circleRadius = 4.3F
-        dataSet.lineWidth = 1.5f
-        dataSet.valueTextSize = 8F
+        activity?.let {
+            context?.let { ContextCompat.getColor(it, R.color.colorBlue) }?.let { dataSet.setCircleColor(it) }
+            dataSet.color = context?.let { ContextCompat.getColor(it, R.color.colorBlue) }!!
+            dataSet.circleRadius = 4.3F
+            dataSet.lineWidth = 1.5f
+            dataSet.valueTextSize = 8F
 
-        chartView.data = LineData(dataSet)
-        xAxis?.granularity = 1f
-        xAxis?.valueFormatter = IndexAxisValueFormatter(labels)
-        xAxis?.labelCount = labels.size
+            chartView.data = LineData(dataSet)
+            xAxis?.granularity = 1f
+            xAxis?.valueFormatter = IndexAxisValueFormatter(labels)
+            xAxis?.labelCount = labels.size
 
-        chartView.animateXY(500, 2000)
-        chartView.invalidate()
+            chartView.animateXY(500, 2000)
+            chartView.invalidate()
+        }
     }
 
     override fun onDataChanged() {
@@ -217,29 +218,30 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, OnDataChange
 
     @SuppressLint("SetTextI18n")
     private fun updateView(){
-        setViewVisible(View.VISIBLE)
+        activity?.let {
+            setViewVisible(View.VISIBLE)
 
-        val alcoholsMap = filterAlcohols?.map { it.timestamp to it.value }?.toMap()
+            val alcoholsMap = filterAlcohols?.map { it.timestamp to it.value }?.toMap()
 
-        var average = 0.0
+            var average = 0.0
 
-        if (filterAlcohols?.size != 0) {
-            loadChart(filterAlcohols)
-            average = alcoholsMap?.values?.average()!!
+            if (filterAlcohols?.size != 0) {
+                loadChart(filterAlcohols)
+                average = alcoholsMap?.values?.average()!!
+            }
+
+            fattyLiverImageView.alpha = (average.div(0.3)).toFloat()
+            averageTextView.text = "평균 : ${average.toFloat()}"
+
+            filterAlcohols?.let { adapter?.setItems(it) }
+            adapter?.notifyDataSetChanged()
+
+
+            val animation : Animation = AnimationUtils.loadAnimation(context, R.anim.animation_scale)
+
+            liverImageView.startAnimation(animation)
+            fattyLiverImageView.startAnimation(animation)
         }
-
-        fattyLiverImageView.alpha = (average.div(0.3)).toFloat()
-        averageTextView.text = "평균 : ${average.toFloat()}"
-
-        filterAlcohols?.let { adapter?.setItems(it) }
-        adapter?.notifyDataSetChanged()
-
-
-        val animation : Animation = AnimationUtils.loadAnimation(context, R.anim.animation_scale)
-
-        liverImageView.startAnimation(animation)
-        fattyLiverImageView.startAnimation(animation)
-
     }
 
     private fun setViewVisible(invisible: Int) {

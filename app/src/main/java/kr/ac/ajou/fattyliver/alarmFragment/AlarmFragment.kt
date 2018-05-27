@@ -17,7 +17,7 @@ import kr.ac.ajou.fattyliver.model.Alarm
 import kr.ac.ajou.fattyliver.model.AlarmModel
 
 
-class Tab2Fragment : Fragment(), AlarmModel.OnAlarmLoadListener {
+class AlarmFragment : Fragment(), AlarmModel.OnAlarmLoadListener {
 
     private var adapter: AlarmListRecyclerAdapter? = null
     private var alarmRecyclerView: RecyclerView? = null
@@ -25,7 +25,7 @@ class Tab2Fragment : Fragment(), AlarmModel.OnAlarmLoadListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = LayoutInflater.from(context).inflate(R.layout.fragment_tab2, container, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.fragment_alarm, container, false)
         alarmRecyclerView = view.findViewById(R.id.alarm_recyclerView)
         val addAlarmButton: FloatingActionButton = view.findViewById(R.id.add_alarm_button)
 

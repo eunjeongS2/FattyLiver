@@ -43,28 +43,29 @@ class UserModel {
     }
 
     private fun getUser(uid: String){
-        ref = database.getReference("user")?.child(uid)?.child("info")
+        ref = database.getReference("user").child(uid).child("info")
 
 
         this.ref?.addValueEventListener(object: ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) {
-                println(p0?.message)
+            override fun onCancelled(p0: DatabaseError) {
+                println(p0.message)
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
-                val children: Iterable<DataSnapshot> = p0!!.children
+            override fun onDataChange(p0: DataSnapshot) {
+                val children: Iterable<DataSnapshot> = p0.children
                 val user: User? = children.first().getValue<User>(User::class.java)
 
                 instance.user = user
 
                 onLoginListener?.onSuccess()
-
             }
+
+
         })
     }
 
     private fun addUser(uid: String, name: String, email: String, password: String){
-        ref = database.getReference("user")?.child(uid)?.child("info")
+        ref = database.getReference("user").child(uid).child("info")
 
         val childRef: DatabaseReference? = ref?.push()
         childRef?.setValue(User(uid = uid, name = name, email = email, password = password))

@@ -23,8 +23,8 @@ class ChartModel {
         labels = mutableSetOf()
 
         var dataCount = 0F
-        for (data : Alcohol in dataList){
 
+        for (data : Alcohol in dataList){
             pointList?.add(Entry(dataCount, data.value.toFloat()))
             labels?.add(data.timestamp.split("/")[1])
             dataCount++

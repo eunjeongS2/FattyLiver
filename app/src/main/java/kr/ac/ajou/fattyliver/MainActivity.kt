@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
+import kr.ac.ajou.fattyliver.alarmFragment.AlarmFragment
 import kr.ac.ajou.fattyliver.alarmFragment.ReleaseAlarmFragment
-import kr.ac.ajou.fattyliver.alarmFragment.Tab2Fragment
 import kr.ac.ajou.fattyliver.chatFragment.ChatFragment
 import kr.ac.ajou.fattyliver.mainTabFragment.MainTabFragment
+import kr.ac.ajou.fattyliver.mesurementFragment.MeasureFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_alarm -> {
-                replaceFragment(Tab2Fragment())
+                replaceFragment(AlarmFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_community -> {
@@ -28,11 +29,11 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_alcohol -> {
-                replaceFragment(Tab4Fragment())
+                replaceFragment(MeasureFragment())
                 return@OnNavigationItemSelectedListener true
             }
         }
-        false
+        return@OnNavigationItemSelectedListener false
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -52,11 +53,19 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.main_bottom_navigation)
         BottomNavigationViewHelper.removeShiftMode(bottomNavigationView)
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+//        for (i in 0 until bottomNavigationView.childCount) {
+//            val iconView: View = bottomNavigationView.getChildAt(i).findViewById(android.support.design.R.id.icon)
+//            val layoutParams = iconView.layoutParams
+//            val displayMetrics = resources.displayMetrics
+//            layoutParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32f, displayMetrics).toInt()
+//            layoutParams.width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32f, displayMetrics).toInt()
+//            iconView.layoutParams = layoutParams
+//        }
 
         val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
 
-        if(notiString != null) {
-            if(notiString == "notiIntent") {
+        if (notiString != null) {
+            if (notiString == "notiIntent") {
                 val fragment = ReleaseAlarmFragment()
                 val bundle = Bundle()
                 bundle.putString("password", password)
@@ -67,7 +76,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             fragmentTransaction.add(R.id.main_container, MainTabFragment()).commit()
         }
-
     }
 
 }
