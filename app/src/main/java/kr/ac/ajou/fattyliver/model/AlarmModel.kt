@@ -2,7 +2,6 @@ package kr.ac.ajou.fattyliver.model
 
 import android.util.Log
 import com.google.firebase.database.*
-import kr.ac.ajou.fattyliver.Model.Alarm
 import org.json.JSONObject
 import java.io.OutputStream
 import java.net.HttpURLConnection
@@ -10,9 +9,11 @@ import java.net.URL
 
 
 class AlarmModel {
-    private val TAG = "AlarmModel"
-    private val FCM_MESSAGE_URL = "https://fcm.googleapis.com/fcm/send"
-    private val SERVER_KEY = "AAAAJK0wJs4:APA91bFgNobtyghiC9XqXpvWBQBDWRA8RxAPymqZ9JVGQQQU0I0CI50U_3AgQOVsDLj-ql2e1aA2Mlx1b0ZVBT1hKYa7JSL_IgCFQu7zzXXBIw6mZKTrVKG4EHRMxaBgtWdTqNnTXgsd"
+    companion object {
+        const val TAG = "AlarmModel"
+        const val FCM_MESSAGE_URL = "https://fcm.googleapis.com/fcm/send"
+        const val SERVER_KEY = "AAAAJK0wJs4:APA91bFgNobtyghiC9XqXpvWBQBDWRA8RxAPymqZ9JVGQQQU0I0CI50U_3AgQOVsDLj-ql2e1aA2Mlx1b0ZVBT1hKYa7JSL_IgCFQu7zzXXBIw6mZKTrVKG4EHRMxaBgtWdTqNnTXgsd"
+    }
 
     private var alarmRef: DatabaseReference
 

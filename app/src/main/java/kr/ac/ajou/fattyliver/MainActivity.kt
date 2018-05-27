@@ -5,36 +5,34 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
-import android.view.MenuItem
-import kr.ac.ajou.fattyliver.AlarmFragment.ReleaseAlarmFragment
-import kr.ac.ajou.fattyliver.AlarmFragment.Tab2Fragment
+import kr.ac.ajou.fattyliver.alarmFragment.ReleaseAlarmFragment
+import kr.ac.ajou.fattyliver.alarmFragment.Tab2Fragment
+import kr.ac.ajou.fattyliver.chatFragment.ChatFragment
 import kr.ac.ajou.fattyliver.mainTabFragment.MainTabFragment
 
 
 class MainActivity : AppCompatActivity() {
 
-    private var mOnNavigationItemSelectedListener: BottomNavigationView.OnNavigationItemSelectedListener = object : BottomNavigationView.OnNavigationItemSelectedListener {
-        override fun onNavigationItemSelected(item: MenuItem): Boolean {
-            when (item.itemId) {
-                R.id.nav_graph -> {
-                    replaceFragment(MainTabFragment())
-                    return true
-                }
-                R.id.nav_alarm -> {
-                    replaceFragment(Tab2Fragment())
-                    return true
-                }
-                R.id.nav_community -> {
-                    replaceFragment(Tab3Fragment())
-                    return true
-                }
-                R.id.nav_alcohol -> {
-                    replaceFragment(Tab4Fragment())
-                    return true
-                }
+    private var mOnNavigationItemSelectedListener: BottomNavigationView.OnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.nav_graph -> {
+                replaceFragment(MainTabFragment())
+                return@OnNavigationItemSelectedListener true
             }
-            return false
+            R.id.nav_alarm -> {
+                replaceFragment(Tab2Fragment())
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_community -> {
+                replaceFragment(ChatFragment())
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_alcohol -> {
+                replaceFragment(Tab4Fragment())
+                return@OnNavigationItemSelectedListener true
+            }
         }
+        false
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -63,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                 val bundle = Bundle()
                 bundle.putString("password", password)
                 bundle.putString("phone", phone)
-                fragment.setArguments(bundle)
+                fragment.arguments = bundle
                 fragmentTransaction.addToBackStack(null).replace(R.id.main_container, fragment).commit()
             }
         } else {

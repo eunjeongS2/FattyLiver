@@ -1,4 +1,4 @@
-package kr.ac.ajou.fattyliver.AlarmFragment
+package kr.ac.ajou.fattyliver.alarmFragment
 
 
 import android.os.Bundle
@@ -12,9 +12,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.support.v7.widget.DividerItemDecoration
-import kr.ac.ajou.fattyliver.AddAlarmFragment
 import kr.ac.ajou.fattyliver.R
-import kr.ac.ajou.fattyliver.Model.Alarm
+import kr.ac.ajou.fattyliver.model.Alarm
 import kr.ac.ajou.fattyliver.model.AlarmModel
 
 

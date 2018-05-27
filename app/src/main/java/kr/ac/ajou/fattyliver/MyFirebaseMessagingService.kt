@@ -16,8 +16,9 @@ import com.google.firebase.messaging.RemoteMessage
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    private val TAG = "MessagingService"
-
+    companion object {
+        const val TAG = "MessagingService"
+    }
 
     override fun onMessageReceived(p0: RemoteMessage?) {
         // 앱이 foreground일 때 푸시알람을 받으면 실행

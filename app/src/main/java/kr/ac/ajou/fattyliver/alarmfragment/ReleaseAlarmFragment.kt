@@ -1,4 +1,4 @@
-package kr.ac.ajou.fattyliver.AlarmFragment
+package kr.ac.ajou.fattyliver.alarmFragment
 
 
 import android.Manifest

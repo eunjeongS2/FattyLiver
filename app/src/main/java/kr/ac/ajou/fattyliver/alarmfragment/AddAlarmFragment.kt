@@ -1,4 +1,4 @@
-package kr.ac.ajou.fattyliver
+package kr.ac.ajou.fattyliver.alarmFragment
 
 
 import android.app.AlarmManager
@@ -18,13 +18,15 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TimePicker
 import android.widget.Toast
-import kr.ac.ajou.fattyliver.AlarmFragment.BroadcastD
+import kr.ac.ajou.fattyliver.R
 import kr.ac.ajou.fattyliver.model.AlarmModel
 import java.util.*
 
 
 class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
-    private val TAG = "AddAlarmFragment"
+    companion object {
+        private val TAG = AddAlarmFragment::class.java.simpleName
+    }
 
     private lateinit var timePicker: TimePicker
     private var nHour: String = ""
@@ -121,12 +123,10 @@ class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
     }
 
     private fun set2CharNum(num: Int): String {
-        var number: String
-        if (num >= 10)
-            number = num.toString() + ""
+        return if (num >= 10)
+            num.toString() + ""
         else
-            number = "0$num"
-        return number
+            "0$num"
     }
 
 
