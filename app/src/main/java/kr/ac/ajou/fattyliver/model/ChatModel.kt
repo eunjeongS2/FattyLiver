@@ -22,13 +22,13 @@ class ChatModel {
         chatRef = database.getReference("chats")
 
         this.chatRef?.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) {
-                println(p0?.message)
+            override fun onCancelled(p0: DatabaseError) {
+                println(p0.message)
             }
 
-            override fun onDataChange(p0: DataSnapshot?) {
+            override fun onDataChange(p0: DataSnapshot) {
                 val newChats: MutableList<Chat> = mutableListOf()
-                val children: MutableIterable<DataSnapshot>? = p0?.children
+                val children: MutableIterable<DataSnapshot>? = p0.children
 
                 for (e in children!!) {
                     val chat: Chat? = e.getValue(Chat::class.java)
@@ -37,8 +37,8 @@ class ChatModel {
 
                 chats = newChats
                 onChatLoadListener?.onFetchChat(chats!!)
-
             }
+
 
         })
 

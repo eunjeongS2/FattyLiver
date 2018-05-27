@@ -107,7 +107,7 @@ class ReleaseAlarmFragment : Fragment() {
             fragmentManager?.popBackStackImmediate()
         }
 
-        buttonDelete = view.findViewById(R.id.buttonDeleteBack) as Button
+        buttonDelete = view.findViewById(R.id.buttonDeleteBack)
         buttonDelete?.setOnClickListener(View.OnClickListener {
             if (keyPadLockedFlag === true) {
                 return@OnClickListener
@@ -151,7 +151,7 @@ class ReleaseAlarmFragment : Fragment() {
                         //notificationManager.cancel(NOTIFICATION_ID)
                         notificationManager.cancelAll()
 //                            finish()
-                        fragmentManager?.beginTransaction()?.addToBackStack(null)?.replace(R.id.main_container, Tab2Fragment())?.commit()
+                        fragmentManager?.beginTransaction()?.addToBackStack(null)?.replace(R.id.main_container, AlarmFragment())?.commit()
 
                     } else {
                         statusView?.setTextColor(Color.RED)

@@ -15,7 +15,7 @@ class AlarmModel {
         const val SERVER_KEY = "AAAAJK0wJs4:APA91bFgNobtyghiC9XqXpvWBQBDWRA8RxAPymqZ9JVGQQQU0I0CI50U_3AgQOVsDLj-ql2e1aA2Mlx1b0ZVBT1hKYa7JSL_IgCFQu7zzXXBIw6mZKTrVKG4EHRMxaBgtWdTqNnTXgsd"
     }
 
-    private var alarmRef: DatabaseReference
+    private var alarmRef: DatabaseReference? = null
 
     private var alarms: MutableList<Alarm>? = null
     private var onAlarmLoadListener: OnAlarmLoadListener? = null
@@ -28,8 +28,8 @@ class AlarmModel {
         alarms = mutableListOf()
 
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-        alarmRef = database.getReference("user").child(UserModel.instance.user?.uid).child("alarms")
-        alarmRef.addValueEventListener(object : ValueEventListener {
+        alarmRef = UserModel.instance.user?.uid?.let { database.getReference("user").child(it).child("alarms")}
+        alarmRef?.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 println(p0.message)
             }
@@ -64,16 +64,16 @@ class AlarmModel {
     }
 
     fun saveAlarm(meridiem: String, time: String, phoneNum: String, password: String) {
-        val childRef: DatabaseReference = alarmRef.push()
+        val childRef: DatabaseReference = alarmRef?.push()!!
         childRef.setValue(childRef.key?.let { Alarm(it, meridiem, time, phoneNum, password) })
     }
 
     fun deleteAlarm(alarmId: String) {
-        alarmRef.child(alarmId).removeValue()
+        alarmRef?.child(alarmId)?.removeValue()
     }
 
-    fun changeAlarmActivate(alarmId: String?, activate: Boolean) {
-        alarmRef.child(alarmId).child("activate").setValue(activate)
+    fun changeAlarmActivate(alarmId: String, activate: Boolean) {
+        alarmRef?.child(alarmId)?.child("activate")?.setValue(activate)
     }
 
     // push notification 전송
