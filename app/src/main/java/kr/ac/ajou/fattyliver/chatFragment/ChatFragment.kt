@@ -54,7 +54,7 @@ class ChatFragment : Fragment(), ChatModel.OnChatLoadListener {
         chatListRecyclerView.adapter = adapter
     }
 
-    override fun onFetchAlarm(chatList: MutableList<Chat>) {
+    override fun onFetchChat(chatList: MutableList<Chat>) {
         adapter?.setItems(chatList)
         adapter?.notifyDataSetChanged()
         chatListRecyclerView.scrollToPosition(chatList.size - 1)

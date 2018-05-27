@@ -9,7 +9,7 @@ class ChatModel {
     private var onChatLoadListener: OnChatLoadListener? = null
 
     interface OnChatLoadListener {
-        fun onFetchAlarm(chatList: MutableList<Chat>)
+        fun onFetchChat(chatList: MutableList<Chat>)
     }
 
 
@@ -36,7 +36,7 @@ class ChatModel {
                 }
 
                 chats = newChats
-                onChatLoadListener?.onFetchAlarm(chats!!)
+                onChatLoadListener?.onFetchChat(chats!!)
 
             }
 
