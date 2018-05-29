@@ -28,12 +28,14 @@ class UsersModel{
                 val newUserList: MutableList<UserSelect> = mutableListOf()
                 val children: MutableIterable<DataSnapshot>? = p0.children
 
-                for (e in children!!) {
-                    val userList = e.child("info").children.first().getValue<User>(User::class.java)
-                    userList?.let {
-                        newUserList.add(UserSelect.newUserSelect(userList.name, userList.uid, false))
-                    }
-                }
+                children!!
+                        .map { it.child("info").getValue<User>(User::class.java) }
+                        .forEach {
+                            it?.let {
+                                if(it.name != UserModel.instance.user?.name)
+                                    newUserList.add(UserSelect.newUserSelect(it.name, it.uid, false))
+                            }
+                        }
                 userList = newUserList
 
                 onUserListLoadListener?.onFetchUserList(userList!!)

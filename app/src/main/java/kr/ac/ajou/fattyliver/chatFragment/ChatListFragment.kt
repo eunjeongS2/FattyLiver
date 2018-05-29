@@ -80,6 +80,7 @@ class ChatListFragment : Fragment(), AbstractRecyclerAdapter.OnItemClickListener
     override fun onFetchChatList(chatList: MutableList<ChatList>) {
         adapter?.setItems(chatList)
         adapter?.notifyDataSetChanged()
+
     }
 }
 

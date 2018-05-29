@@ -3,12 +3,10 @@ package kr.ac.ajou.fattyliver.chatFragment
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.CompoundButton
 import kr.ac.ajou.fattyliver.AbstractRecyclerAdapter
 import kr.ac.ajou.fattyliver.AbstractViewHolder
 import kr.ac.ajou.fattyliver.R
 import kr.ac.ajou.fattyliver.model.UserSelect
-import kr.ac.ajou.fattyliver.model.UsersModel
 
 class UserListRecyclerAdapter : AbstractRecyclerAdapter<UserSelect>() {
 

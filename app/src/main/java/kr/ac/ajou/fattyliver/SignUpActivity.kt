@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_signup.*
 import kr.ac.ajou.fattyliver.model.UserModel
 

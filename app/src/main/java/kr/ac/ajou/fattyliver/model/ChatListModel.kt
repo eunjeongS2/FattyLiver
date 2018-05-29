@@ -31,12 +31,17 @@ class ChatListModel{
                     val users: MutableList<String> = mutableListOf()
                     val timestamp : String? = e.child("timestamp").getValue(String::class.java)
 
+                    val lastMessage: Chat? = if(e.child("message").hasChildren())
+                        e.child("message").children.last().getValue(Chat::class.java)
+                    else Chat()
+
                     e.child("users").children.forEach {
                         it.getValue(String::class.java)?.let { users.add(it) }
                     }
 
                     if(users.contains(UserModel.instance.user?.name)){
-                        chatId?.let { timestamp?.let { it1 -> newChatList.add(ChatList(users, it, it1)) } }
+
+                        chatId?.let { timestamp?.let { it1 -> lastMessage?.let { it2 -> ChatList(users, it, it1, it2) }?.let { it2 -> newChatList.add(it2) } } }
                     }
                 }
 
@@ -50,7 +55,7 @@ class ChatListModel{
 
     fun addChat(users: MutableList<String>) {
         val childRef = chatListRef?.push()
-        childRef?.setValue(childRef.key?.let { ChatList.newChatList(users, it) })
+        childRef?.setValue(childRef.key?.let { ChatList.newChatList(users = users, chatId = it) })
     }
 
 }

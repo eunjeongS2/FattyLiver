@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="닉네임"
-            android:text="은동우동" />
+            android:text="덩" />
 
     </android.support.design.widget.TextInputLayout>
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <rotate
+            android:fromDegrees="270"
+            android:toDegrees="270"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:drawable="@drawable/back_button"/>
+    </item>
+
+    <item>
+        <rotate
+            android:fromDegrees="270"
+            android:toDegrees="270"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:drawable="@drawable/back_button"/>
+    </item>
+
+</selector>

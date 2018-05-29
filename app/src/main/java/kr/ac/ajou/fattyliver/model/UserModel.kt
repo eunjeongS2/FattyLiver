@@ -52,14 +52,11 @@ class UserModel {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                val children: Iterable<DataSnapshot> = p0.children
-                val user: User? = children.first().getValue<User>(User::class.java)
-
+                val user: User? = p0.getValue(User::class.java)
                 instance.user = user
 
                 onLoginListener?.onSuccess()
             }
-
 
         })
     }
@@ -67,8 +64,11 @@ class UserModel {
     private fun addUser(uid: String, name: String, email: String, password: String){
         ref = database.getReference("user").child(uid).child("info")
 
-        val childRef: DatabaseReference? = ref?.push()
-        childRef?.setValue(User(uid = uid, name = name, email = email, password = password))
+        ref?.child("uid")?.setValue(uid)
+        ref?.child("name")?.setValue(name)
+        ref?.child("email")?.setValue(email)
+        ref?.child("password")?.setValue(password)
+
     }
 
     fun signUp(name: String, email: String, password: String){

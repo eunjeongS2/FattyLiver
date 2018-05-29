@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -81,13 +82,14 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
             transaction?.addToBackStack(null)
 
             val args = Bundle()
-            alcohols?.let {
-                alcohols = alcoholModel?.getMaxAlcohols()
+            alcohols = alcoholModel?.getMaxAlcohols()
+
+            if(alcohols?.size != 0){
                 args.putString("startDate", alcohols?.get(0)?.timestamp)
                 dialog.arguments = args
                 dialog.setTargetFragment(this, REQUEST_CODE)
                 dialog.show(transaction, CalendarFragment.TAG)
-            }
+            }else Toast.makeText(context, "데이터가 없습니다 !", Toast.LENGTH_SHORT).show()
         }
         alcohols = mutableListOf()
         filterAlcohols = mutableListOf()
