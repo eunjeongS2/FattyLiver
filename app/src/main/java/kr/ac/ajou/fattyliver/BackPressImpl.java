@@ -3,9 +3,6 @@ package kr.ac.ajou.fattyliver;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-/**
- * Created by shahabuddin on 6/6/14.
- */
 public class BackPressImpl implements OnBackPressListener {
 
     private Fragment parentFragment;

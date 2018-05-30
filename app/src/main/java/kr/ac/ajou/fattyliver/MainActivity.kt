@@ -1,10 +1,10 @@
 package kr.ac.ajou.fattyliver
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
+import android.support.v7.app.AppCompatActivity
 import kr.ac.ajou.fattyliver.alarmFragment.AlarmFragment
 import kr.ac.ajou.fattyliver.alarmFragment.ReleaseAlarmFragment
 import kr.ac.ajou.fattyliver.chatFragment.ChatListFragment

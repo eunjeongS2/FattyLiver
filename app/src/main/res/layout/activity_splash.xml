@@ -11,52 +11,135 @@
         android:id="@+id/imageView_splash_fattyliver"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="300dp"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        android:layout_marginTop="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/fattyliver" />
+        app:srcCompat="@drawable/splash_fattyliver" />
 
     <ImageView
         android:id="@+id/imageView_splash_liver"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="300dp"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        android:layout_marginTop="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/liver" />
+        app:srcCompat="@drawable/splash_liver" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
+    <ImageView
+        android:id="@+id/imageView_splash_title1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="372dp" />
+        android:layout_marginBottom="100dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_splash_title2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_splash_liver"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/title1" />
+
+    <ImageView
+        android:id="@+id/imageView_splash_title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_splash_title3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView_splash_title1"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_splash_liver"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/title2" />
+
+    <ImageView
+        android:id="@+id/imageView_splash_title3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_splash_title4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView_splash_title2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_splash_liver"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/title3" />
+
+    <ImageView
+        android:id="@+id/imageView_splash_title4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_splash_title5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView_splash_title3"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_splash_liver"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/title4" />
+
+    <ImageView
+        android:id="@+id/imageView_splash_title5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_splash_title6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView_splash_title4"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_splash_liver"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/title5" />
+
+    <ImageView
+        android:id="@+id/imageView_splash_title6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView_splash_title5"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_splash_liver"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/title6" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:textSize="11sp"
-        android:textColor="@color/colorBad"
+        android:layout_marginTop="8dp"
         android:text="지나친 음주는 간경화나 간암을 일으키며\n운전이나 작업 중 사고 발생률을 높입니다."
+        android:textColor="@color/colorBad"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_splash_fattyliver" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.97" />
 
 
 </android.support.constraint.ConstraintLayout>

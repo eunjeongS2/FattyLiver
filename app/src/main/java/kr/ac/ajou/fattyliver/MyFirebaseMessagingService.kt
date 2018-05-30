@@ -8,7 +8,6 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
-import android.os.PowerManager
 import android.support.v4.app.NotificationCompat
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -31,9 +30,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 //            val wakeLock: PowerManager.WakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP, TAG)
 //            wakeLock.acquire(3000)
 
-//            val title = p0.data["title"]
+//            val title1 = p0.data["title1"]
 //            val body = p0.data["body"]
-//            Log.d(TAG, title+body)
+//            Log.d(TAG, title1+body)
             sendNotification(p0.notification?.body.toString(), p0.notification?.title.toString())
 
         }

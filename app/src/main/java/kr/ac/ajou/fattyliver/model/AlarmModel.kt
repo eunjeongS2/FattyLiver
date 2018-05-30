@@ -82,7 +82,7 @@ class AlarmModel {
             val root = JSONObject()
             val notification = JSONObject()
             notification.put("body", "집 가자 ~")
-            notification.put("title", time)
+            notification.put("title1", time)
             root.put("notification", notification)
             root.put("to", token)
 

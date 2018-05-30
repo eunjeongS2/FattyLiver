@@ -37,9 +37,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity"/>
-        <activity android:name=".SignUpActivity">
+        <activity android:name=".SignUpActivity"/>
+        <activity android:name=".BaseActivity"/>
 
-        </activity>
 
         <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>
