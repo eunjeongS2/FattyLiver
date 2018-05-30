@@ -95,7 +95,6 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
         filterAlcohols = mutableListOf()
 
         alcoholModel = AlcoholModel()
-
         alcoholModel?.onDataChangedListener = this
 
         chartModel = ChartModel()
@@ -147,11 +146,11 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
             dataSet.lineWidth = 1.5f
             dataSet.valueTextSize = 8F
 
-            chartView.data = LineData(dataSet)
             xAxis?.granularity = 1f
             xAxis?.valueFormatter = IndexAxisValueFormatter(labels)
             xAxis?.labelCount = labels.size
 
+            chartView.data = LineData(dataSet)
             chartView.animateXY(500, 2000)
             chartView.invalidate()
         }
@@ -161,7 +160,6 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
         progressBar.visibility = View.INVISIBLE
 
         alcohols = alcoholModel?.getMaxAlcohols()
-
 
         if (filterAlcohols?.size == 0) {
             if (alcohols?.size!! <= 5)
@@ -188,17 +186,23 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
-        val dateAlcohols : MutableList<Alcohol>? = e?.x?.toInt()?.let { xAxis?.getFormattedLabel(it) }.toString().let { alcoholModel?.getDateAlcohols(it) }
+        val dateAlcohols : MutableList<Alcohol>? = if(filterAlcohols?.size != 1)
+            e?.x?.toInt()?.let { xAxis?.getFormattedLabel(it) }.toString().let { alcoholModel?.getDateAlcohols(it) }
+        else
+            alcoholModel?.getDateAlcohols(filterAlcohols!![0].timestamp.split("/")[1])
 
         val dialog = DateAlcoholDialogFragment()
         val transaction : FragmentTransaction? = fragmentManager?.beginTransaction()
         transaction?.addToBackStack(null)
 
         val args = Bundle()
-        args.putParcelableArrayList("date alcohols", dateAlcohols as java.util.ArrayList<out Parcelable>)
-        dialog.arguments = args
 
-        dialog.show(transaction, DateAlcoholDialogFragment.TAG)
+        dateAlcohols?.let {
+            args.putParcelableArrayList("date alcohols", dateAlcohols as java.util.ArrayList<out Parcelable>)
+            dialog.arguments = args
+
+            dialog.show(transaction, DateAlcoholDialogFragment.TAG)
+        }
 
     }
 
@@ -219,30 +223,29 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
 
     @SuppressLint("SetTextI18n")
     private fun updateView(){
+        var average = 0.0
+
         activity?.let {
             setViewVisible(View.VISIBLE)
 
             val alcoholsMap = filterAlcohols?.map { it.timestamp to it.value }?.toMap()
-
-            var average = 0.0
 
             if (filterAlcohols?.size != 0) {
                 loadChart(filterAlcohols)
                 average = alcoholsMap?.values?.average()!!
             }
 
-            fattyLiverImageView.alpha = (average.div(0.3)).toFloat()
-            averageTextView.text = "평균 : ${average.toFloat()}"
-
-            filterAlcohols?.let { adapter?.setItems(it) }
-            adapter?.notifyDataSetChanged()
-
-
             val animation : Animation = AnimationUtils.loadAnimation(context, R.anim.animation_scale)
 
             liverImageView.startAnimation(animation)
             fattyLiverImageView.startAnimation(animation)
         }
+
+        fattyLiverImageView.alpha = (average.div(0.3)).toFloat()
+        averageTextView.text = "평균 : ${average.toFloat()}"
+
+        filterAlcohols?.let { adapter?.setItems(it) }
+        adapter?.notifyDataSetChanged()
     }
 
     private fun setViewVisible(invisible: Int) {

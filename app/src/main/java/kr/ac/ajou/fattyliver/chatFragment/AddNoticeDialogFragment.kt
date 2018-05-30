@@ -66,7 +66,7 @@ class AddNoticeDialogFragment : DialogFragment(), TimePicker.OnTimeChangedListen
 
     override fun onTimeChanged(p0: TimePicker?, p1: Int, p2: Int) {
         meridiem = if(p1 in 0..11) "오전" else "오후"
-        hour = p1
+        hour = if(p1 > 12) p1-12 else p1
         minute = p2
     }
 

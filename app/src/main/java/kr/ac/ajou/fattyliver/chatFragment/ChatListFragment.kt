@@ -52,7 +52,6 @@ class ChatListFragment : Fragment(), AbstractRecyclerAdapter.OnItemClickListener
 
     }
     private fun setUpChatListView(){
-        chatListRecyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager(context).orientation))
         val manager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         chatListRecyclerView.layoutManager = manager
         adapter = ChatListRecyclerAdapter()

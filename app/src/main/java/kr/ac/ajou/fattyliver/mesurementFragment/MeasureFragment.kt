@@ -101,7 +101,7 @@ class MeasureFragment : Fragment() {
                 commandWrite("*")
                 activity?.runOnUiThread {
                     startButton.isEnabled = true
-                    AlcoholModel().addAlcohol("", measureText.text.toString().toDouble())
+                    AlcoholModel().addAlcohol(value = measureText.text.toString().toDouble())
                 }
             }
         }
