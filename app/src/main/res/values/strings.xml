@@ -6,4 +6,10 @@
     <string name="default_notification_channel_name">default channel name</string>
     <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
     <string name="notification_title">안심귀가 할 시간 ~</string>
+
+    <integer-array name="object_image">
+        <item></item>
+
+    </integer-array>
+
 </resources>

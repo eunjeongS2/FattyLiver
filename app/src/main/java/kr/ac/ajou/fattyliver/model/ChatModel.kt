@@ -43,10 +43,8 @@ class ChatModel(chatId: String) {
                 }
                 chats = newChats
                 onChatLoadListener?.onFetchChat(chats!!, notice)
-
             }
         })
-
     }
 
     fun sendMessage(message: String) {
@@ -55,9 +53,6 @@ class ChatModel(chatId: String) {
     }
 
     fun addNotice(notice: String, time: String){
-        chatRef?.child("notice")?.child("notice")?.setValue(notice)
-        chatRef?.child("notice")?.child("time")?.setValue(time)
+        chatRef?.child("notice")?.setValue(Notice.newNotice(notice, time))
     }
-
-
 }

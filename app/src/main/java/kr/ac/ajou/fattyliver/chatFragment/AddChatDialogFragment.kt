@@ -29,6 +29,7 @@ class AddChatDialogFragment : DialogFragment(), UsersModel.OnUserListLoadListene
     private var adapter : UserListRecyclerAdapter? = null
     private var addButton : Button? = null
     private var usersModel : UsersModel? = null
+    private var alcoholImage: String = "beer"
 
 
     @SuppressLint("InflateParams")
@@ -43,15 +44,64 @@ class AddChatDialogFragment : DialogFragment(), UsersModel.OnUserListLoadListene
         val closeButton = view?.findViewById<ImageView>(R.id.button_add_cancel)
         addButton = view?.findViewById(R.id.button_add_user)
 
+        val beerImageView = view?.findViewById<ImageView>(R.id.imageView_beer)
+        val sojuImageView = view?.findViewById<ImageView>(R.id.imageView_soju)
+        val cocktailImageView = view?.findViewById<ImageView>(R.id.imageView_cocktail)
+        val wineImageView = view?.findViewById<ImageView>(R.id.imageView_wine)
+
+        beerImageView?.setOnClickListener{
+            v -> v.isSelected = !v.isSelected
+
+            if (v.isSelected){
+                alcoholImage = "beer"
+                sojuImageView?.isSelected = false
+                cocktailImageView?.isSelected = false
+                wineImageView?.isSelected = false
+            }
+        }
+
+        sojuImageView?.setOnClickListener{
+            v -> v.isSelected = !v.isSelected
+
+            if (v.isSelected){
+                alcoholImage = "soju"
+                beerImageView?.isSelected = false
+                cocktailImageView?.isSelected = false
+                wineImageView?.isSelected = false
+            }
+        }
+
+        cocktailImageView?.setOnClickListener{
+            v -> v.isSelected = !v.isSelected
+
+            if (v.isSelected){
+                alcoholImage = "cocktail"
+                beerImageView?.isSelected = false
+                sojuImageView?.isSelected = false
+                wineImageView?.isSelected = false
+            }
+        }
+
+        wineImageView?.setOnClickListener{
+            v -> v.isSelected = !v.isSelected
+
+            if (v.isSelected){
+                alcoholImage = "wine"
+                beerImageView?.isSelected = false
+                sojuImageView?.isSelected = false
+                cocktailImageView?.isSelected = false
+            }
+        }
+
         val currentUser = UserModel.instance.user
 
         addButton?.setOnClickListener{
-            if (usersModel?.selectedUserList?.size != 0)
+            if (usersModel?.selectedUserList?.size != 0){
                 currentUser?.let {
                     usersModel?.addUsers(UserSelect.newUserSelect(currentUser.name, currentUser.uid, true))
                 }
-                ChatListModel().addChat(usersModel?.selectedUserList?.map { it.name } as MutableList<String>)
-
+                ChatListModel().addChat(usersModel?.selectedUserList?.map { it.name } as MutableList<String>, alcoholImage)
+            }
             dismiss()
         }
 

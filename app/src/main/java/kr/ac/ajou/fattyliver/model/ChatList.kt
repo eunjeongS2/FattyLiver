@@ -3,10 +3,10 @@ package kr.ac.ajou.fattyliver.model
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ChatList(var users: MutableList<String> = mutableListOf(), var chatId: String = "", var timestamp: String = "", var lastMessage: Chat? = null){
+class ChatList(var users: MutableList<String> = mutableListOf(), var chatId: String = "", var timestamp: String = "", var lastMessage: Chat? = null, var alcoholImage: String){
     companion object {
-        fun newChatList(users: MutableList<String>, chatId: String, lastMessage: Chat = Chat()): ChatList {
-            return ChatList(users, chatId, timestamp(), lastMessage)
+        fun newChatList(users: MutableList<String>, chatId: String, lastMessage: Chat = Chat(), alcoholImage: String): ChatList {
+            return ChatList(users, chatId, timestamp(), lastMessage, alcoholImage)
         }
 
         private fun timestamp(): String {

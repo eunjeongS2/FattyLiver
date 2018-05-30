@@ -26,6 +26,6 @@ class UserListRecyclerAdapter : AbstractRecyclerAdapter<UserSelect>() {
         val checkBox: CheckBox = holder.itemView.findViewById(R.id.checkBox_user)
         checkBox.isChecked = getItem(position)?.selected ?: false
 
-        checkBox.setOnCheckedChangeListener { p0, p1 -> getItem(position)?.let { onUserSelectedListener?.onUserSelect(it, p1) } }
+        checkBox.setOnCheckedChangeListener { _, p1 -> getItem(position)?.let { onUserSelectedListener?.onUserSelect(it, p1) } }
     }
 }

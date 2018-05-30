@@ -31,7 +31,7 @@ class ChatListFragment : Fragment(), AbstractRecyclerAdapter.OnItemClickListener
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = LayoutInflater.from(context).inflate(R.layout.fragemnt_chat_list, container, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.fragement_chat_list, container, false)
 
         chatListRecyclerView = view.findViewById(R.id.recyclerView_chat_list)
         addButton = view.findViewById(R.id.button_chatList_add)

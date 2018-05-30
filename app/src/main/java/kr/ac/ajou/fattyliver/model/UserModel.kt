@@ -64,10 +64,7 @@ class UserModel {
     private fun addUser(uid: String, name: String, email: String, password: String){
         ref = database.getReference("user").child(uid).child("info")
 
-        ref?.child("uid")?.setValue(uid)
-        ref?.child("name")?.setValue(name)
-        ref?.child("email")?.setValue(email)
-        ref?.child("password")?.setValue(password)
+        ref?.setValue(User.newUser(uid, name, email, password))
 
     }
 
