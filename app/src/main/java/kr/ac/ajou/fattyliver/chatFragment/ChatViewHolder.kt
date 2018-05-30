@@ -37,7 +37,10 @@ class ChatViewHolder(parent: ViewGroup): AbstractViewHolder<Chat>(
         layout.gravity = Gravity.END
         setText(item)
         message.setBackgroundResource(R.drawable.bg_msg_to)
-        textHolder.getChildAt(0).bringToFront()
+        println(textHolder.getChildAt(0))
+        if(textHolder.getChildAt(0)== message) {
+            textHolder.getChildAt(0).bringToFront()
+        }
         timestamp.translationX = -15f
     }
 
