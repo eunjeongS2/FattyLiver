@@ -5,8 +5,8 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.TextInputLayout
 import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,10 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TimePicker
-import android.widget.Toast
+import android.widget.*
 import kr.ac.ajou.fattyliver.R
 import kr.ac.ajou.fattyliver.model.AlarmModel
 import java.util.*
@@ -36,10 +33,9 @@ class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
     private var nMeridiem: String = ""
     private lateinit var phone: EditText
     private lateinit var password: EditText
-    private lateinit var passwordLayout: TextInputLayout
+    private lateinit var passwordError: TextView
     private lateinit var saveButton: Button
     private lateinit var cancelButton: Button
-    //private var fcm: MyFirebaseMessagingService? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -50,7 +46,7 @@ class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
 
         phone = view.findViewById(R.id.alarm_phone_edit)
         password = view.findViewById(R.id.alarm_password_edit)
-        passwordLayout = view.findViewById(R.id.alarm_password_layout)
+        passwordError = view.findViewById(R.id.textView_password_error)
 
         //비밀번호 4자리 입력 확인
         password.addTextChangedListener(object : TextWatcher {
@@ -60,9 +56,11 @@ class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (password.length() != 4) {
-                    passwordLayout.error = "비밀번호는 4자리로 입력해주세요!"
+                    passwordError.text = "비밀번호는 4자리로 입력해주세요!"
+                    passwordError.setTextColor(Color.RED)
                 } else {
-                    passwordLayout.isErrorEnabled = false
+                    passwordError.text = "4자리"
+                    passwordError.setTextColor(Color.BLACK)
                 }
             }
 

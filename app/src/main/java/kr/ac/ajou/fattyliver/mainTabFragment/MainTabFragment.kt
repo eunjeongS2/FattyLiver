@@ -36,23 +36,23 @@ import kr.ac.ajou.fattyliver.model.UserModel
 
 class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel.OnDataChangedListener, OnChartValueSelectedListener, CalendarFragment.OnDateChangedListener {
 
-    private lateinit var idTextView : TextView
-    private lateinit var calendarImageView : ImageView
-    private lateinit var chartView : LineChart
-    private var xAxis : XAxis? = null
-    private var yAxis : YAxis? = null
-    private lateinit var alcoholListRecyclerView : RecyclerView
-    private lateinit var liverImageView : ImageView
-    private lateinit var fattyLiverImageView : ImageView
-    private lateinit var averageTextView : TextView
-    private lateinit var colorTextView : TextView
-    private lateinit var progressBar : ProgressBar
+    private lateinit var idTextView: TextView
+    private lateinit var calendarImageView: ImageView
+    private lateinit var chartView: LineChart
+    private var xAxis: XAxis? = null
+    private var yAxis: YAxis? = null
+    private lateinit var alcoholListRecyclerView: RecyclerView
+    private lateinit var liverImageView: ImageView
+    private lateinit var fattyLiverImageView: ImageView
+    private lateinit var averageTextView: TextView
+    private lateinit var colorTextView: TextView
+    private lateinit var progressBar: ProgressBar
 
-    private var adapter : AlcoholListRecyclerAdapter? = null
-    private var chartModel : ChartModel? = null
-    private var alcoholModel : AlcoholModel? = null
-    private var alcohols : MutableList<Alcohol>? = null
-    private var filterAlcohols : MutableList<Alcohol>? = null
+    private var adapter: AlcoholListRecyclerAdapter? = null
+    private var chartModel: ChartModel? = null
+    private var alcoholModel: AlcoholModel? = null
+    private var alcohols: MutableList<Alcohol>? = null
+    private var filterAlcohols: MutableList<Alcohol>? = null
 
     companion object {
         const val REQUEST_CODE = 300
@@ -78,24 +78,25 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
 
         calendarImageView.setOnClickListener {
             val dialog = CalendarFragment()
-            val transaction : FragmentTransaction? = fragmentManager?.beginTransaction()
+            val transaction: FragmentTransaction? = fragmentManager?.beginTransaction()
             transaction?.addToBackStack(null)
 
             val args = Bundle()
             alcohols = alcoholModel?.getMaxAlcohols()
 
-            if(alcohols?.size != 0){
+            if (alcohols?.size != 0) {
                 args.putString("startDate", alcohols?.get(0)?.timestamp)
                 dialog.arguments = args
                 dialog.setTargetFragment(this, REQUEST_CODE)
                 dialog.show(transaction, CalendarFragment.TAG)
-            }else Toast.makeText(context, "데이터가 없습니다 !", Toast.LENGTH_SHORT).show()
+            } else Toast.makeText(context, "데이터가 없습니다 !", Toast.LENGTH_SHORT).show()
         }
         alcohols = mutableListOf()
         filterAlcohols = mutableListOf()
 
         alcoholModel = AlcoholModel()
         alcoholModel?.onDataChangedListener = this
+        alcoholModel?.addAlcohol(value = 0.04)
 
         chartModel = ChartModel()
         chartModel?.onChartLoadListener = this
@@ -107,7 +108,7 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
         return view
     }
 
-    private fun initChart(){
+    private fun initChart() {
         chartView.setOnChartValueSelectedListener(this)
         chartView.axisRight?.isEnabled = false
         chartView.setTouchEnabled(true)
@@ -130,7 +131,7 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
         xAxis?.position = XAxis.XAxisPosition.BOTTOM
     }
 
-    private fun setUpAlcoholListView(){
+    private fun setUpAlcoholListView() {
         val manager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         alcoholListRecyclerView.layoutManager = manager
         adapter = AlcoholListRecyclerAdapter()
@@ -157,24 +158,23 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
     }
 
     override fun onDataChanged() {
+        println("onDataChanged")
         progressBar.visibility = View.INVISIBLE
+        filterAlcohols = mutableListOf()
 
         alcohols = alcoholModel?.getMaxAlcohols()
 
-        if (filterAlcohols?.size == 0) {
-            if (alcohols?.size!! <= 5)
-                filterAlcohols = alcohols
-            else {
-                alcohols?.get(alcohols?.size!!-5)?.let { filterAlcohols?.add(it) }
-                alcohols?.get(alcohols?.size!!-4)?.let { filterAlcohols?.add(it) }
-                alcohols?.get(alcohols?.size!!-3)?.let { filterAlcohols?.add(it) }
-                alcohols?.get(alcohols?.size!!-2)?.let { filterAlcohols?.add(it) }
-                alcohols?.get(alcohols?.size!!-1)?.let { filterAlcohols?.add(it) }
-            }
+        if (alcohols?.size!! <= 5) {
+            filterAlcohols = alcohols
+        } else {
+            alcohols?.get(alcohols?.size!! - 5)?.let { filterAlcohols?.add(it) }
+            alcohols?.get(alcohols?.size!! - 4)?.let { filterAlcohols?.add(it) }
+            alcohols?.get(alcohols?.size!! - 3)?.let { filterAlcohols?.add(it) }
+            alcohols?.get(alcohols?.size!! - 2)?.let { filterAlcohols?.add(it) }
+            alcohols?.get(alcohols?.size!! - 1)?.let { filterAlcohols?.add(it) }
         }
 
         updateView()
-
     }
 
     private fun loadChart(alcohols: MutableList<Alcohol>?) {
@@ -186,13 +186,10 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
-        val dateAlcohols : MutableList<Alcohol>? = if(filterAlcohols?.size != 1)
-            e?.x?.toInt()?.let { xAxis?.getFormattedLabel(it) }.toString().let { alcoholModel?.getDateAlcohols(it) }
-        else
-            alcoholModel?.getDateAlcohols(filterAlcohols!![0].timestamp.split("/")[1])
+        val dateAlcohols = e?.x?.toInt()?.let { filterAlcohols?.get(it)?.timestamp?.split("/")?.get(1)?.let { it1 -> alcoholModel?.getDateAlcohols(it1) } }
 
         val dialog = DateAlcoholDialogFragment()
-        val transaction : FragmentTransaction? = fragmentManager?.beginTransaction()
+        val transaction: FragmentTransaction? = fragmentManager?.beginTransaction()
         transaction?.addToBackStack(null)
 
         val args = Bundle()
@@ -203,7 +200,6 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
 
             dialog.show(transaction, DateAlcoholDialogFragment.TAG)
         }
-
     }
 
     override fun onDateChanged(dates: MutableList<String>) {
@@ -212,33 +208,22 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
         dates.forEach {
             val filterDate = it.split("/")[1]
 
-            val saveAlcohol : Alcohol? = alcohols?.firstOrNull { filterDate == it.timestamp.split("/")[1] }
+            val saveAlcohol: Alcohol? = alcohols?.firstOrNull { filterDate == it.timestamp.split("/")[1] }
 
             saveAlcohol?.let { it1 -> filterAlcohols?.add(it1) }
         }
-
         updateView()
-
     }
 
     @SuppressLint("SetTextI18n")
-    private fun updateView(){
+    private fun updateView() {
         var average = 0.0
 
-        activity?.let {
-            setViewVisible(View.VISIBLE)
+        val alcoholsMap = filterAlcohols?.map { it.timestamp to it.value }?.toMap()
 
-            val alcoholsMap = filterAlcohols?.map { it.timestamp to it.value }?.toMap()
-
-            if (filterAlcohols?.size != 0) {
-                loadChart(filterAlcohols)
-                average = alcoholsMap?.values?.average()!!
-            }
-
-            val animation : Animation = AnimationUtils.loadAnimation(context, R.anim.animation_scale)
-
-            liverImageView.startAnimation(animation)
-            fattyLiverImageView.startAnimation(animation)
+        if (filterAlcohols?.size != 0) {
+            loadChart(filterAlcohols)
+            average = alcoholsMap?.values?.average()!!
         }
 
         fattyLiverImageView.alpha = (average.div(0.3)).toFloat()
@@ -246,6 +231,15 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
 
         filterAlcohols?.let { adapter?.setItems(it) }
         adapter?.notifyDataSetChanged()
+
+        activity?.let {
+            setViewVisible(View.VISIBLE)
+
+            val animation: Animation = AnimationUtils.loadAnimation(context, R.anim.animation_scale)
+
+            liverImageView.startAnimation(animation)
+            fattyLiverImageView.startAnimation(animation)
+        }
     }
 
     private fun setViewVisible(invisible: Int) {

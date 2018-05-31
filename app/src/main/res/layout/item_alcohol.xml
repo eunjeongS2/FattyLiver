@@ -39,7 +39,6 @@
         android:layout_marginTop="8dp"
         android:textSize="23sp"
         android:textStyle="bold"
-        android:textColor="#2d2d2d"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"

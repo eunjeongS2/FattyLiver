@@ -1,86 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FAFAFA"
+    android:padding="10dp">
+
+
+    <TextView
+        android:id="@+id/textView_password_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="4자리"
+        android:textColor="@color/colorBlack"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView_password"
+        app:layout_constraintTop_toTopOf="@+id/textView_password"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="25dp"
+        android:text="비밀번호"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintBottom_toTopOf="@+id/alarm_password_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alarm_phone_edit" />
+
+    <TextView
+        android:id="@+id/textView_alarm_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:text="알람시간"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintBottom_toTopOf="@+id/timePicker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="25dp"
+        android:text="전화번호"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintBottom_toTopOf="@+id/alarm_phone_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timePicker" />
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/border_black_notice"
+        android:timePickerMode="spinner"
+        app:layout_constraintBottom_toTopOf="@+id/textView_phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_alarm_time" />
+
+    <EditText
+        android:id="@+id/alarm_password_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border_black_notice"
+        android:textColor="@color/colorBlack"
+        android:inputType="numberPassword"
+        android:padding="13sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_password" />
+
+
+    <EditText
+        android:id="@+id/alarm_phone_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_black_notice"
+        android:inputType="phone"
+        android:padding="13sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_phone" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:id="@+id/linearLayout6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alarm_password_edit"
+        app:layout_constraintVertical_bias="1.0">
 
-        <TimePicker
-            android:id="@+id/timePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:timePickerMode="spinner" />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/alarm_phone_layout"
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/ok_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="8dp">
+            android:layout_margin="15dp"
+            android:background="@drawable/white_rounded_button"
+            android:padding="12dp"
+            android:text="저장" />
 
-            <EditText
-                android:id="@+id/alarm_phone_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="전화번호"
-                android:inputType="phone" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/alarm_password_layout"
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/cancel_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="8dp">
-
-            <EditText
-                android:id="@+id/alarm_password_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="비밀번호"
-                android:inputType="numberPassword" />
-        </android.support.design.widget.TextInputLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/ok_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:background="@drawable/white_rounded_button"
-                android:padding="12dp"
-                android:text="저장" />
-
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/cancel_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:background="@drawable/white_rounded_button"
-                android:padding="12dp"
-                android:text="취소" />
-
-        </LinearLayout>
+            android:layout_margin="15dp"
+            android:background="@drawable/white_rounded_button"
+            android:padding="12dp"
+            android:text="취소" />
 
     </LinearLayout>
 
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>
