@@ -1,6 +1,7 @@
 package kr.ac.ajou.fattyliver.mainTabFragment
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.graphics.Color
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
@@ -58,7 +60,7 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
         const val REQUEST_CODE = 300
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "InflateParams")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = LayoutInflater.from(context).inflate(R.layout.fragment_main_tab, container, false)
         idTextView = view.findViewById(R.id.textView_id)
@@ -70,11 +72,21 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
         averageTextView = view.findViewById(R.id.textView_average)
         colorTextView = view.findViewById(R.id.textView_color)
         progressBar = view.findViewById(R.id.progressBar_main)
+        val infoImageView = view.findViewById<ImageView>(R.id.imageView_main_info)
 
         setViewVisible(View.INVISIBLE)
         progressBar.visibility = View.VISIBLE
 
         idTextView.text = "${UserModel.instance.user?.name} 님!"
+
+        infoImageView.setOnClickListener {
+            val infoDialog = Dialog(context)
+            infoDialog.window.requestFeature(Window.FEATURE_NO_TITLE)
+            val infoDialogLayout = layoutInflater.inflate(R.layout.layout_info_image, null)
+            infoDialog.setContentView(infoDialogLayout)
+            infoDialogLayout.findViewById<ImageView>(R.id.imageView_info_cancel).setOnClickListener{ infoDialog.dismiss() }
+            infoDialog.show()
+        }
 
         calendarImageView.setOnClickListener {
             val dialog = CalendarFragment()
@@ -96,7 +108,15 @@ class MainTabFragment : Fragment(), ChartModel.OnChartLoadListener, AlcoholModel
 
         alcoholModel = AlcoholModel()
         alcoholModel?.onDataChangedListener = this
-        alcoholModel?.addAlcohol(value = 0.04)
+
+        alcoholModel?.addAlcohol("2018/5.9/오후 11:00", 0.12)
+        alcoholModel?.addAlcohol("2018/5.10/오후 11:00", 0.08)
+        alcoholModel?.addAlcohol("2018/5.11/오후 11:00", 0.09)
+        alcoholModel?.addAlcohol("2018/5.12/오후 11:00", 0.10)
+        alcoholModel?.addAlcohol("2018/5.13/오후 11:00", 0.13)
+        alcoholModel?.addAlcohol("2018/5.14/오후 11:00", 0.15)
+        alcoholModel?.addAlcohol("2018/5.15/오후 11:00", 0.20)
+
 
         chartModel = ChartModel()
         chartModel?.onChartLoadListener = this

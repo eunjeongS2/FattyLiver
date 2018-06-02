@@ -96,9 +96,6 @@ class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
             Log.d(TAG, """${phone.text}/${password.text}/$nMeridiem $nHour:$nMinute""") // 저장
             alarmModel.saveAlarm(nMeridiem, "$nHour:$nMinute", phone.text.toString(), password.text.toString())
 
-//            val token = FirebaseInstanceId.getInstance().token
-//            Log.d(TAG, token)
-//            alarmModel.sendPostToFCM(token, "$nHour:$nMinute")
             val diff = diffMillis(oHour, oMinute)
             setAlarm(diff)
 

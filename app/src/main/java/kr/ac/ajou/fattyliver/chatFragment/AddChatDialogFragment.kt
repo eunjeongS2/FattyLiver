@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import kr.ac.ajou.fattyliver.R
@@ -149,4 +150,10 @@ class AddChatDialogFragment : DialogFragment(), UsersModel.OnUserListLoadListene
         else usersModel?.removeUsers(userSelect)
 
     }
+
+//    override fun onStart() {
+//        super.onStart()
+//
+//        dialog.window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+//    }
 }

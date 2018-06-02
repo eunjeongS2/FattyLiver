@@ -45,8 +45,7 @@
             android:id="@+id/editText_signUp_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="닉네임"
-            android:text="덩" />
+            android:hint="닉네임" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -69,8 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ID"
-            android:inputType="textEmailAddress"
-            android:text="dmswjd2340@naver.com" />
+            android:inputType="textEmailAddress" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -94,8 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:inputType="textPassword"
-            android:text="123456" />
+            android:inputType="textPassword" />
 
     </android.support.design.widget.TextInputLayout>
 
