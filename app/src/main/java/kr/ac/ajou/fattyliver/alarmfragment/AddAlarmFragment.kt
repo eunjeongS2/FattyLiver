@@ -21,9 +21,7 @@ import java.util.*
 
 
 class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
-    companion object {
-        private val TAG = AddAlarmFragment::class.java.simpleName
-    }
+    private val TAG = "AddAlarmFragment"
 
     private lateinit var timePicker: TimePicker
     private var nHour: String = ""
@@ -48,7 +46,6 @@ class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
         password = view.findViewById(R.id.alarm_password_edit)
         passwordError = view.findViewById(R.id.textView_password_error)
 
-        //비밀번호 4자리 입력 확인
         password.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
@@ -96,6 +93,9 @@ class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
             Log.d(TAG, """${phone.text}/${password.text}/$nMeridiem $nHour:$nMinute""") // 저장
             alarmModel.saveAlarm(nMeridiem, "$nHour:$nMinute", phone.text.toString(), password.text.toString())
 
+//            val token = FirebaseInstanceId.getInstance().token
+//            Log.d(TAG, token)
+//            alarmModel.sendPostToFCM(token, "$nHour:$nMinute")
             val diff = diffMillis(oHour, oMinute)
             setAlarm(diff)
 
@@ -118,10 +118,12 @@ class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
     }
 
     private fun set2CharNum(num: Int): String {
-        return if (num >= 10)
-            num.toString() + ""
+        var number = ""
+        if (num >= 10)
+            number = num.toString() + ""
         else
-            "0$num"
+            number = "0$num"
+        return number
     }
 
 
@@ -139,7 +141,6 @@ class AddAlarmFragment : Fragment(), TimePicker.OnTimeChangedListener {
         if(nMeridiem == "오전") {
             pickerTime.add(Calendar.DATE, 1)
         }
-
         pickerTime.set(Calendar.HOUR_OF_DAY, hour)
         pickerTime.set(Calendar.MINUTE, minute)
         pickerTime.set(Calendar.SECOND, 0)
